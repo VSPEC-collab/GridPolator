@@ -55,6 +55,10 @@ def bin_spectra(wl_old: np.array, fl_old: np.array, wl_new: np.array):
     -------
     fl_new : np.ndarray
         The new flux values.
+    
+    Todo
+    ----
+    Implement in rust or C.
     """
     binned_flux = []
     for i in range(len(wl_new) - 1):
