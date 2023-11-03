@@ -3,44 +3,12 @@ GridPolator configurations
 
 This module contains global configurations used in the GridPolator and VSPEC codes.
 """
-from astropy import units as u
-import numpy as np
 from pathlib import Path
+from astropy import units as u
 
-MSH = u.def_unit('msh', 1e-6 * 0.5 * 4*np.pi*u.R_sun**2)
-"""
-Micro-solar hemisphere
+GRIDS_BASE_DIR = Path(__file__).parent / 'grids'
 
-This is a standard unit in heliophysics that
-equals one millionth of one half the surface area of the Sun.
-
-:type: astropy.units.Unit
-"""
-
-stellar_area_unit = MSH
-"""
-The standard stellar surface area unit.
-
-This unit is used to represent the surface area of stars in VSPEC.
-The micro-solar hemisphere is chosen because most Sun Spot literature uses
-this unit.
-
-:type: astropy.units.Unit
-"""
-
-starspot_initial_area = 10*MSH
-"""
-Initial ``StarSpot`` area.
-
-Because spots grow exponentially, they can't start at 0 area.
-When they are born they are given this small area.
-
-:type: astropy.units.Quantity
-
-.. todo::
-    This should optionaly be set by the user. So that smaller
-    star spot area regimes are accessible.
-"""
+VSPEC_PHOENIX_DIR = GRIDS_BASE_DIR / 'phoenix_vspec'
 
 flux_unit = u.Unit('W m-2 um-1')
 """
@@ -72,31 +40,6 @@ we want units to be consistent.
 :type: astropy.units.Unit
 """
 
-nlat = 500
-"""
-The default latitude resolution for the stellar model. This should
-be set by finding a balance between noticing small changes in spots/faculae
-and computation time.
-
-:type: int
-"""
-
-nlon = 1000
-"""
-The default longitude resolution for the stellar model. This should
-be set by finding a balance between noticing small changes in spots/faculae
-and computation time.
-
-:type: int
-"""
-
-grid_teff_bounds = (2300*u.K, 3900*u.K)
-"""
-The limits on the effective temperature allowed by the grid.
-
-:type: tuple of astropy.units.Quantity
-"""
-
 planet_distance_unit = u.AU
 """
 The standard unit of planetary semimajor axis.
@@ -125,119 +68,4 @@ This unit is determined by PSG and used to standardize
 the orbital and rotational periods of planets in VSPEC.
 
 :type: astropy.units.Unit
-"""
-
-psg_encoding = 'UTF-8'
-"""
-Default encoding for files from PSG.
-
-:type: str
-
-.. depricated::
-    This may not be needed now that we recieve data from PSG as bytes.
-    I should check.
-"""
-
-PSG_PORT = 3000
-"""
-Default port to run PSG locally.
-
-This port number is used to access the PSG API locally.
-
-:type: int
-"""
-
-PSG_EXT_URL = 'https://psg.gsfc.nasa.gov'
-"""
-The URL of the external PSG (Planetary Spectrum Generator) version.
-
-This URL is used to access the PSG web interface externally.
-
-.. warning::
-    The external PSG server only allows 100 anonymous API
-    calls per day. Please either use an API key or a local
-    PSG installation.
-
-:type: str
-"""
-
-PSG_CFG_MAX_LINES = 1500
-"""
-The maximum number of lines to allow in
-the PSG config file. Do not set this over 2000,
-as PSG will stop updating.
-
-:type: int
-
-Notes
------
-For security reasons, PSG only allows ``.cfg`` files to be
-up to 2000 lines long. This means that, every so often,
-we have to send a ``set`` command, which resets everything.
-This command is sent after the ``.cfg`` returned by PSG reaches
-`PSG_CFG_MAX_LINES` lines long.
-"""
-
-
-psg_pressure_unit = u.bar
-"""
-PSG atmospheric pressure unit.
-
-This unit is determined by PSG and used to standardize
-the atmospheric pressure of planets in VSPEC.
-
-:type: astropy.units.Unit
-"""
-psg_aerosol_size_unit = u.m
-"""
-PSG aerosol size unit.
-
-This unit is determined by PSG and used to
-standardize aerosol size in VSPEC.
-
-:type: astropy.units.Unit
-"""
-
-atmosphere_type_dict = {'H2':45,'He':0,'H2O':1,'CO2':2,'O3':3,'N2O':4,'CO':5,'CH4':6,'O2':7,
-                        'NO':8,'SO2':9,'NO2':10,'N2':22,'HNO3':12,'HO2NO2':'SEC[26404-66-0] Peroxynitric acid',
-                        'N2O5':'XSEC[10102-03-1] Dinitrogen pentoxide','O':'KZ[08] Oxygen',
-                        'OH':'EXO[OH]'}
-"""
-A dictionary mapping molecular species to the default
-database to use to create opacities. These are all
-internal to PSG, but must be set by ``VSPEC``.
-
-Integers mean that we want to use data from the HITRAN database, which for a number ``N``
-is represented in PSG by ``HIT[N]``. Strings are sent straight to PSG as is.
-
-:type: dict
-"""
-
-aerosol_name_dict = {
-    'Water':{
-        'name':'CLDLIQ',
-        'size':'REL'
-    },
-    'WaterIce':{
-        'name':'CLDICE',
-        'size':'REI'
-    }
-}
-"""
-A dictionary mapping aerosol species from their PSG name
-to their name in the WACCM NetCDF format.
-
-:type: dict
-"""
-
-aerosol_type_dict = {
-    'Water': 'AFCRL_Water_HRI',
-    'WaterIce': 'Warren_ice_HRI'
-}
-"""
-A dictionary mapping aerosol species to the default
-database to use. These are all
-internal to PSG, but must be set by ``VSPEC``.
-
-:type: dict
 """
