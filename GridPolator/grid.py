@@ -6,8 +6,8 @@ from jax.scipy.interpolate import RegularGridInterpolator
 from astropy import units as u
 from tqdm.auto import tqdm
 
-from GridPolator import read_phoenix
-from GridPolator import isclose
+from GridPolator.phoenix import read_phoenix
+from GridPolator.astropy_units import isclose
 from GridPolator import config
 
 
