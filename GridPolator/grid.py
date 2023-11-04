@@ -48,7 +48,7 @@ class GridSpectra:
         spectra = np.array(spectra)
         self._evaluate = jit(RegularGridInterpolator(params, spectra))
 
-    def evaluate(self, wl: u.Quantity, *args):
+    def evaluate(self, wl: jnp.ndarray, *args):
         """
         Evaluate the grid. `args` has the same order as `params` in the `__init__` method.
 
@@ -66,7 +66,7 @@ class GridSpectra:
 
         """
         X = jnp.array([jnp.ones_like(wl)*arg for arg in args] +
-                      [wl.to_value(config.wl_unit)]).T
+                      [wl]).T
         return self._evaluate(X)
 
     @classmethod
