@@ -2,8 +2,13 @@
 Tests for binning functionality.
 """
 import numpy as np
+from astropy import units as u
 import pytest
+from time import time
+import warnings
 
+
+from GridPolator.builtins.phoenix_vspec import RawReader
 from GridPolator.binning import get_wavelengths, bin_spectra
 
 
@@ -70,3 +75,17 @@ def test_bin_spectra_parametrized(
     assert isinstance(binned_flux, np.ndarray)
     assert len(binned_flux) == len(wl_new) - 1
     assert np.all(binned_flux == expected)
+    
+def test_bin_from_phoenix():
+    w1 = 1*u.um
+    w2 = 18*u.um
+    resolving_power = 50
+    reader = RawReader()
+    wl, fl = reader.read(3000*u.K)
+    new_wl = get_wavelengths(resolving_power, w1.value, w2.value)
+    start_time = time()
+    _ = bin_spectra(wl.value, fl.value, new_wl)
+    dtime = time() - start_time
+    msg = f'Python binned in {dtime} seconds.'
+    warnings.warn(msg)
+    print(f'Binned in {dtime} seconds.')
