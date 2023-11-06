@@ -9,7 +9,7 @@ import warnings
 
 
 from GridPolator.builtins.phoenix_vspec import RawReader
-from GridPolator.binning import get_wavelengths, bin_spectra
+from GridPolator.binning import get_wavelengths, bin_spectra, bin_spectra_rust
 
 
 def test_get_wavelengths():
@@ -89,3 +89,11 @@ def test_bin_from_phoenix():
     msg = f'Python binned in {dtime} seconds.'
     warnings.warn(msg)
     print(f'Binned in {dtime} seconds.')
+    
+    start_time = time()
+    _ = bin_spectra_rust(wl.value, fl.value, new_wl)
+    dtime = time() - start_time
+    msg = f'Rust binned in {dtime} seconds.'
+    warnings.warn(msg)
+    print(f'Binned in {dtime} seconds.')
+    

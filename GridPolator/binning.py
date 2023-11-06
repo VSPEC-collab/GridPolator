@@ -4,6 +4,8 @@ Spectra binning functions
 
 import numpy as np
 
+from GridPolator._gridpolator import bin_spectra as bin_spectra_rust
+
 
 def get_wavelengths(resolving_power: int, lam1: float, lam2: float) -> np.ndarray:
     """
