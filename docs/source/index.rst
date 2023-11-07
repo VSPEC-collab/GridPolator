@@ -12,6 +12,7 @@ Welcome to Gridpolator's documentation!
 
    intro
    api
+   auto_examples/index
 
 
 
