@@ -1,7 +1,7 @@
-The Gridpolator API
+The GridPolator API
 ===================
 
-This page describes the Gridpolator API.
+This page describes the GridPolator API.
 
 .. automodapi:: GridPolator
     :no-inheritance-diagram:

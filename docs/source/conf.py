@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Gridpolator'
+project = 'GridPolator'
 copyright = '2023, VSPEC Collaboration'
-author = 'Ashraf Dhabhi, Ted Johnson'
+author = 'Ashraf Dhahbi, Ted Johnson'
 release = '1.0'
 
 # -- General configuration ---------------------------------------------------
