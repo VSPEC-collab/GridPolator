@@ -10,6 +10,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = "0.20.0"
-
-[profile.release]
-debug = true
+ndarray = "0.15.6"
+numpy = "0.20.0"
