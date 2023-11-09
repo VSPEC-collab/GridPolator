@@ -74,8 +74,9 @@ class GridSpectra:
         cls,
         w1: u.Quantity,
         w2: u.Quantity,
-        R: int,
-        teffs: u.Quantity
+        resolving_power: float,
+        teffs: u.Quantity,
+        impl: str = 'rust'
     ):
         """
         Load the default VSPEC PHOENIX grid.
@@ -86,16 +87,18 @@ class GridSpectra:
             The blue wavelength limit.
         w2 : astropy.units.Quantity
             The red wavelength limit.
-        R : int
+        resolving_power : float
             The resolving power to use.
         teffs : astropy.units.Quantity
             The temperature coordinates to load.
+        impl : str, Optional
+            The implementation to use. One of 'rust' or 'python'. Defaults to 'rust'.
 
         """
         specs = []
         wl = None
         for teff in tqdm(teffs, desc='Loading Spectra', total=len(teffs)):
-            wave, flux = read_phoenix(teff, R, w1, w2)
+            wave, flux = read_phoenix(teff, resolving_power, w1, w2, impl=impl)
             specs.append(flux.to_value(config.flux_unit))
             if wl is None:
                 wl = wave

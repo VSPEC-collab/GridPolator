@@ -1,6 +1,6 @@
 /// The GridPolator binning module in Rust.
 /// Benchmarks have shown that this implementation is
-/// 50 times faster than Python.
+/// 20 times faster than Python.
 use numpy::ndarray::Array1;
 use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1};
 use pyo3::{pymodule, types::PyModule, PyResult, Python};

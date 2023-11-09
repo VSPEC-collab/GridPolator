@@ -2,7 +2,7 @@
 /// This is a rust implementation of the
 /// binning algorithm in VSPEC.
 /// Benchmarks have shown that this implementation is
-/// 50 times faster than Python.
+/// 20 times faster than Python.
 /// 
 /// Original algorithm by Cameron Kelahan, Rust
 /// implementation and optimizations by Ted Johnson
@@ -25,7 +25,7 @@ use ndarray::Array1;
 /// * This function is a rust implementation of the
 /// binning algorithm in VSPEC.
 /// * Benchmarks have shown that this implementation is
-/// 50 times faster than Python.
+/// 20 times faster than Python.
 /// 
 pub fn bin_spectra(
     wl_old: Array1<f64>,
