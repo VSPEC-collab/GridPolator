@@ -1,4 +1,4 @@
-Gridpolator
+GridPolator
 ===========
 
 A package to interpolate stellar spectral grids.

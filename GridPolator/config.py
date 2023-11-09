@@ -10,6 +10,7 @@ GRIDS_BASE_DIR = Path(__file__).parent / 'grids'
 
 VSPEC_PHOENIX_DIR = GRIDS_BASE_DIR / 'phoenix_vspec'
 
+
 flux_unit = u.Unit('W m-2 um-1')
 """
 The standard unit of flux.
@@ -20,6 +21,7 @@ spectral irrandience unit in PSG.
 
 :type: astropy.units.Unit
 """
+
 
 teff_unit = u.K
 """

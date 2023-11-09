@@ -1,0 +1,5 @@
+sphinx
+furo
+sphinxcontrib-napoleon
+sphinx-automodapi
+numpydoc
