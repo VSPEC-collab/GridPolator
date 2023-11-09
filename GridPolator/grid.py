@@ -48,7 +48,7 @@ class GridSpectra:
         spectra = np.array(spectra)
         self._evaluate = jit(RegularGridInterpolator(params, spectra))
 
-    def evaluate(self, wl: jnp.ndarray, *args):
+    def evaluate(self, wl: jnp.ndarray, *args)->jnp.ndarray:
         """
         Evaluate the grid. `args` has the same order as `params` in the `__init__` method.
 
@@ -61,7 +61,7 @@ class GridSpectra:
 
         Returns
         -------
-        numpy.ndarray
+        jax.numpy.ndarray
             The flux of the grid at the evaluated points.
 
         """
