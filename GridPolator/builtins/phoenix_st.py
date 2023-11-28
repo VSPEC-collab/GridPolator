@@ -5,6 +5,7 @@ STScI
 from pathlib import Path
 import requests
 from astropy.io import fits
+import warnings
 
 from GridPolator import config
 
@@ -307,7 +308,11 @@ def clear():
     """
     Remove the cache directory.
     """
-    DATA_DIR.rmdir()
+    for metalicity in DATA_DIR.iterdir():
+        if metalicity.is_dir():
+            for teff in metalicity.iterdir():
+                if teff.is_file():
+                    teff.unlink()
 
 def delete(teff:int, metallicity:float):
     """
@@ -321,5 +326,7 @@ def delete(teff:int, metallicity:float):
         The metallicity.
     """
     path = get_path(teff, metallicity)
-    path.unlink()
-    
+    if path.exists():
+        path.unlink()
+    else:
+        warnings.warn(f"Model not found: {path}") 

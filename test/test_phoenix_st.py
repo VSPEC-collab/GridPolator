@@ -175,3 +175,6 @@ def test_delete():
     assert phoenix_st.exists(2000, 0.0)
     phoenix_st.delete(2000, 0.0)
     assert not phoenix_st.exists(2000, 0.0)
+
+if __name__ == '__main__':
+    pytest.main(Path(__file__))
