@@ -10,6 +10,9 @@ GRIDS_BASE_DIR = Path(__file__).parent / 'grids'
 
 VSPEC_PHOENIX_DIR = GRIDS_BASE_DIR / 'phoenix_vspec'
 
+USER_DATA_PATH = Path.home() / '.gridpolator'
+USER_GRIDS_PATH = USER_DATA_PATH / 'grids'
+
 
 flux_unit = u.Unit('W m-2 um-1')
 """
