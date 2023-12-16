@@ -24,7 +24,7 @@ teffs = [3000,3100,3200] * u.K
 spec = GridSpectra.from_vspec(
     w1=wave_short,
     w2=wave_long,
-    R=resolving_power,
+    resolving_power=resolving_power,
     teffs=teffs
 )
 

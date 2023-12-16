@@ -1,0 +1,22 @@
+[build-system]
+requires = ["maturin>=1.3,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "GridPolator"
+authors = [
+    {name = "Ashraf Dhahbi", email = "achref.dhahbi@nasa.gov"},
+    {name = "Ted Johnson", email = "ted.johnson@unlv.edu"},
+]
+
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = ["version"]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "GridPolator._gridpolator"
