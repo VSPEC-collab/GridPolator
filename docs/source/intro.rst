@@ -17,5 +17,11 @@ or in development mode:
 .. code-block:: shell
 
     git clone https://github.com/VSPEC-collab/GridPolator.git
-    cd VSPEC
+    cd GridPolator
     pip install -e .
+
+or get a specific release (e.g. `v0.1.0`):
+
+.. code-block:: shell
+
+    pip install git+https://github.com/VSPEC-collab/GridPolator.git@v0.1.0
