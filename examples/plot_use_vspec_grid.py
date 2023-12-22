@@ -6,6 +6,7 @@ This example shows how to use the VSPEC grid.
 """
 from astropy import units as u
 import numpy as np
+from jax import numpy as jnp
 import matplotlib.pyplot as plt
 
 from GridPolator import GridSpectra
@@ -36,9 +37,12 @@ spec = GridSpectra.from_vspec(
 new_wl:u.Quantity = np.linspace(2,5,40) * u.um
 teff = 3050 * u.K
 
-flux = spec.evaluate(new_wl.to_value(config.wl_unit), teff.to_value(config.teff_unit))
+new_wl = jnp.array(new_wl.to_value(config.wl_unit))
+teff = jnp.array([teff.to_value(config.teff_unit)])
+
+flux = spec.evaluate((teff,), new_wl)[0]
 
 plt.plot(new_wl, flux)
-plt.xlabel(f'Wavelength ({new_wl.unit:latex})')
+plt.xlabel(f'Wavelength ({config.wl_unit:latex})')
 _=plt.ylabel(f'Flux ({config.flux_unit:latex})')
 
