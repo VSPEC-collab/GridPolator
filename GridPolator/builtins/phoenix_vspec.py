@@ -65,7 +65,8 @@ def read_phoenix(
     teff: u.Quantity,
     resolving_power: float,
     w1: u.Quantity,
-    w2: u.Quantity
+    w2: u.Quantity,
+    impl: str = 'rust'
 ) -> Tuple[u.Quantity, u.Quantity]:
     """
     Read a PHOENIX model and return an appropriately binned version
@@ -80,6 +81,8 @@ def read_phoenix(
         The blue wavelength limit.
     w2 : astropy.units.Quantity
         The red wavelenght limit.
+    impl : str, Optional
+        The binning implementation to use. Defaults to 'rust'.
 
     Returns
     -------
@@ -97,7 +100,8 @@ def read_phoenix(
         fl_new = bin_spectra(
             wl_old=wl.to_value(config.wl_unit),
             fl_old=flux.to_value(config.flux_unit),
-            wl_new=wl_new.to_value(config.wl_unit)
+            wl_new=wl_new.to_value(config.wl_unit),
+            impl=impl
         )*config.flux_unit
     except ValueError:  # if the desired resolving power
         # is close to the original resolving

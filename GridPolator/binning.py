@@ -3,6 +3,9 @@ Spectra binning functions
 """
 
 import numpy as np
+import warnings
+
+from GridPolator._gridpolator import bin_spectra as bin_spectra_rust
 
 
 def get_wavelengths(resolving_power: int, lam1: float, lam2: float) -> np.ndarray:
@@ -36,7 +39,8 @@ def get_wavelengths(resolving_power: int, lam1: float, lam2: float) -> np.ndarra
     return lams
 
 
-def bin_spectra(wl_old: np.array, fl_old: np.array, wl_new: np.array):
+
+def bin_spectra_python(wl_old: np.ndarray, fl_old: np.ndarray, wl_new: np.ndarray):
     """
     Bin spectra
 
@@ -78,3 +82,57 @@ def bin_spectra(wl_old: np.array, fl_old: np.array, wl_new: np.array):
         binned_flux.append(fl_old[reg].mean())
     binned_flux = np.array(binned_flux)
     return binned_flux
+
+def bin_spectra(
+    wl_old: np.ndarray,
+    fl_old: np.ndarray,
+    wl_new: np.ndarray,
+    impl:str = 'rust'
+):
+    """
+    Bin Spectra to a new wavelength grid.
+    
+    Parameters
+    ----------
+    wl_old : np.ndarray (shape=(N,))
+        The original wavelength values.
+    fl_old : np.ndarray (shape=(N,))
+        The original flux values.
+    wl_new : np.ndarray (shape=(M,))
+        The new wavelength values.
+    impl : str, Optional
+        The implementation to use. One of 'rust' or 'python'. Defaults to 'rust'.
+    
+    Returns
+    -------
+    np.ndarray (shape=(M-1,))
+        The new flux values.
+    
+    Warns
+    -----
+    RuntimeWarning
+        If `wl_old`, `fl_old`, or `wl_new` are not float64.
+    
+    Notes
+    -----
+    The shape of the returned array is one less than the shape of `wl_new`.
+    
+    """
+    def msg(name:str):
+        return f'Converting {name} to float64. This may result in degraded performance. Try explicitly specifying the dtype.'
+    if not wl_old.dtype == np.float64:
+        warnings.warn(msg('wl_old'),RuntimeWarning)
+        wl_old = wl_old.astype(np.float64)
+    if not fl_old.dtype == np.float64:
+        warnings.warn(msg('fl_old'),RuntimeWarning)
+        fl_old = fl_old.astype(np.float64)
+    if not wl_new.dtype == np.float64:
+        warnings.warn(msg('wl_new'),RuntimeWarning)
+        wl_new = wl_new.astype(np.float64)
+    if impl == 'rust':
+        return bin_spectra_rust(wl_old, fl_old, wl_new)
+    elif impl == 'python':
+        return bin_spectra_python(wl_old, fl_old, wl_new)
+    else:
+        raise ValueError(f'Unknown implementation: {impl}')
+    
