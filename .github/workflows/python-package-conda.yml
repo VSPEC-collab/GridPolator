@@ -43,7 +43,10 @@ jobs:
     - name: Build Rust module
       run: |
         maturin build --release
-        pip install .
+        pip install -e .
+    - name: Check the Rust build
+      run: |
+        ls GridPolator
     - name: Lint with flake8
       run: |
         conda install flake8
