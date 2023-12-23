@@ -29,7 +29,7 @@ jobs:
       with:
         profile: minimal
         override: true
-        default: 1.26.0
+        toolchain: stable
     - name: Run cargo check
       uses: actions-rs/cargo@v1
       with:
