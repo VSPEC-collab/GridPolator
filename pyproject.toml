@@ -10,7 +10,7 @@ authors = [
     {name = "Ted Johnson", email = "ted.johnson@unlv.edu"},
 ]
 description = "Interpolate a grid of spectroscopic models."
-readme = "docs/README.rst"
+readme = "docs/readme.rst"
 license = {file = "LICENSE"}
 
 requires-python = ">=3.8"
