@@ -1,4 +1,4 @@
-name: vspec-vsm
+name: gridpolator
 dependencies:
   - pip
   - pip:
