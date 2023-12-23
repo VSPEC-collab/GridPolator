@@ -60,5 +60,5 @@ jobs:
       run: |
         conda install pytest
         pip install coveralls
-        coverage run --source=vspec_vsm -m pytest test
+        coverage run --source=GridPolator -m pytest test
         coveralls
