@@ -24,6 +24,7 @@ dependencies = [
     "astropy",
     "pathlib",
     "jax",
+    "jaxlib",
     "tqdm",
 ]
 
