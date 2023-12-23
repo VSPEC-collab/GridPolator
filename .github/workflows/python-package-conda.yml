@@ -30,9 +30,9 @@ jobs:
         profile: minimal
         override: true
     - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
+      uses: actions-rs/cargo@v1
+      with:
+        command: check
     - name: Install dependencies
       run: |
         conda env update --file environment.yml --name base
