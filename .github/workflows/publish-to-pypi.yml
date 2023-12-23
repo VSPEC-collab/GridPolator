@@ -48,4 +48,4 @@ jobs:
       id-token: write
     steps:
     - name: Publish with Maturin
-    - run: maturin publish --release
+      run: maturin publish --release
