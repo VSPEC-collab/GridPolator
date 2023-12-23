@@ -42,6 +42,7 @@ jobs:
         pip install maturin
     - name: Build Rust module
       run: |
+        maturin build --release
         pip install .
     - name: Lint with flake8
       run: |
