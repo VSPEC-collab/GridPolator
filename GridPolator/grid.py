@@ -13,7 +13,7 @@ from jax.scipy.interpolate import RegularGridInterpolator
 from astropy import units as u
 from tqdm.auto import tqdm
 
-from GridPolator.builtins.phoenix_vspec import read_phoenix
+from GridPolator.builtins.phoenix_vspec import read_phoenix, is_downloaded, download
 from GridPolator.astropy_units import isclose
 from GridPolator import config
 
@@ -154,8 +154,9 @@ class GridSpectra:
         w1: u.Quantity,
         w2: u.Quantity,
         resolving_power: float,
-        teffs: u.Quantity,
-        impl: str = 'rust'
+        teffs: List[int],
+        impl: str = 'rust',
+        fail_on_missing: bool = False
     ):
         """
         Load the default VSPEC PHOENIX grid.
@@ -168,15 +169,25 @@ class GridSpectra:
             The red wavelength limit.
         resolving_power : float
             The resolving power to use.
-        teffs : astropy.units.Quantity
+        teffs : list of int
             The temperature coordinates to load.
         impl : str, Optional
-            The implementation to use. One of 'rust' or 'python'. Defaults to 'rust'.
+            The implementation to use. One of 'rust'
+            or 'python'. Defaults to 'rust'.
+        fail_on_missing : bool, Optional
+            Whether to raise an exception if the grid
+            needs to be downloaded. Defaults to false.
 
         """
         specs = []
         wl = None
         for teff in tqdm(teffs, desc='Loading Spectra', total=len(teffs)):
+            if not is_downloaded(teff):
+                if fail_on_missing:
+                    raise FileNotFoundError(f'PHOENIX grid for {teff} not found. Set `fail_on_missing` to False to download.')
+                else:
+                    print(f'PHOENIX grid for {teff} not found. Downloading...')
+                    download(teff)
             wave, flux = read_phoenix(teff, resolving_power, w1, w2, impl=impl)
             specs.append(flux.to_value(config.flux_unit))
             if wl is None:
@@ -185,6 +196,6 @@ class GridSpectra:
                 if not np.all(isclose(wl, wave, 1e-6*u.um)):
                     raise ValueError('Wavelength values are different!')
         params = OrderedDict(
-            [('teff', jnp.array([teff.to_value(config.teff_unit) for teff in teffs]))])
+            [ ('teff', jnp.array(teffs, dtype=float)) ])
         specs = jnp.array(specs)
         return cls(wl[:-1], params, specs)
