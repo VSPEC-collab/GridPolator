@@ -45,4 +45,4 @@ jobs:
         pip install pytest
         pytest test
     - name: Publish with Maturin
-      run: maturin publish --release
+      run: maturin publish
