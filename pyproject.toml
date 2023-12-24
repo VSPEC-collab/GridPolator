@@ -27,6 +27,7 @@ dependencies = [
     "jaxlib",
     "tqdm",
     "h5py",
+    "requests",
 ]
 
 [project.optional-dependencies]
