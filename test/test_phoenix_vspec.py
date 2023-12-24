@@ -2,29 +2,74 @@
 Test the builtin VSPEC PHOENIX grid
 """
 from astropy import units as u
+import pytest
 
-from GridPolator.builtins.phoenix_vspec import RawReader, read_phoenix
+from GridPolator.builtins import phoenix_vspec
 from GridPolator import config
 
-
-def test_rawreader():
+def test_get_filename():
     """
-    Test the RawReader class.
+    Test the get_filename function.
     """
-    # pylint: disable=protected-access
-    reader = RawReader()
-    assert reader._path.exists()
-    assert reader._path.is_dir()
+    expected = 'lte02300-5.00-0.0.PHOENIX-ACES-AGSS-COND-2011.HR.h5'
+    assert phoenix_vspec.get_filename(2300) == expected
+    with pytest.raises(ValueError):
+        phoenix_vspec.get_filename(0)
 
-    teff = 3000 * u.K
-    filename = reader.get_filename(teff)
-    assert filename == 'lte03000-5.00-0.0.PHOENIX-ACES-AGSS-COND-2011.HR.h5'
-    assert (reader._path / filename).exists()
+def test_get_url():
+    """
+    Test the get_url function.
+    """
+    expected = 'https://zenodo.org/records/10429325/files/lte02300-5.00-0.0.PHOENIX-ACES-AGSS-COND-2011.HR.h5'
+    assert phoenix_vspec.get_url(2300) == expected
+    with pytest.raises(ValueError):
+        phoenix_vspec.get_url(0)
 
-    wl, fl = reader.read(teff)
+# @pytest.mark.skip()
+def test_download():
+    """
+    Test the download function.
+    """
+    teff = 2300
+    downloaded_originally = phoenix_vspec.is_downloaded(teff)
+    path = phoenix_vspec.get_path(teff)
+    try:
+        if downloaded_originally:
+            path.unlink()
+        # pylint: disable=protected-access
+        phoenix_vspec._download(teff)
+        assert phoenix_vspec.is_downloaded(teff)
+        assert path.exists()
+        path.unlink()
+        assert not phoenix_vspec.is_downloaded(teff)
+        assert not path.exists()
+        phoenix_vspec.download(teff)
+        with pytest.raises(ValueError):
+            phoenix_vspec.download(teff+1)
+        assert phoenix_vspec.is_downloaded(teff)
+        assert path.exists()
+        if not downloaded_originally:
+            path.unlink()
+    except Exception as e:
+        if downloaded_originally:
+            phoenix_vspec.download(teff)
+        else:
+            if path.exists():
+                path.unlink()
+            else:
+                pass
+        raise e
+
+def test_read():
+    teff = 2300
+    phoenix_vspec.download(teff)
+    wl, fl = phoenix_vspec.read(teff)
     assert wl.unit == config.wl_unit
     assert fl.unit == config.flux_unit
     assert len(wl) == len(fl)
+    
+
+
 
 
 def test_read_phoenix():
@@ -32,11 +77,12 @@ def test_read_phoenix():
     Test the read_phoenix function.
     """
 
-    teff = 3000*u.K
+    teff = 3000
     resolving_power = 100
     w1 = 1 * u.um
     w2 = 2 * u.um
-    wl, fl = read_phoenix(teff, resolving_power, w1, w2)
+    phoenix_vspec.download(teff)
+    wl, fl = phoenix_vspec.read_phoenix(teff, resolving_power, w1, w2)
 
     assert wl.unit == config.wl_unit
     assert fl.unit == config.flux_unit

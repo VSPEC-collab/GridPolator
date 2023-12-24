@@ -151,7 +151,7 @@ def test_vspec():
     wl1 = 1*u.um
     wl2 = 10*u.um
     resolving_power = 50
-    teffs = [3000, 3100, 3200] * u.K
+    teffs = [3000, 3100, 3200]
 
     grid = GridSpectra.from_vspec(
         w1=wl1,
