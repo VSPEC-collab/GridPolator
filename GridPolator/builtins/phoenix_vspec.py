@@ -6,63 +6,160 @@ from typing import Tuple
 from astropy import units as u
 from scipy.interpolate import RegularGridInterpolator
 import h5py
+from pathlib import Path
+import requests
 
 from GridPolator import config
 from GridPolator.binning import bin_spectra, get_wavelengths
+from .cache import GRIDS_PATH as BASE_GRIDS_PATH
 
 WL_UNIT_NEXTGEN = u.AA
 FL_UNIT_NEXGEN = u.Unit('erg cm-2 s-1 cm-1')
 
+GRIDS_PATH = BASE_GRIDS_PATH / 'phoenix_vspec'
 
-class RawReader:
-    _path = config.VSPEC_PHOENIX_DIR
-    _teff_unit = config.teff_unit
-    _wl_unit_model = WL_UNIT_NEXTGEN
-    _fl_unit_model = FL_UNIT_NEXGEN
 
-    @staticmethod
-    def get_filename(teff: u.Quantity) -> str:
-        """
-        Get the filename for a raw PHOENIX model.
+BASE_URL = 'https://zenodo.org/records/10429325/files/'
 
-        Parameters
-        ----------
-        teff : astropy.units.Quantity
-            The effective temperature of the model
+ALLOWED_TEFFS = [
+    2300,2400,2500,2600,2700,2800,
+    2900,3000,3100,3200,3300,3400,
+    3500,3600,3700,3800,3900
+]
 
-        Returns
-        -------
-        str
-            The filename of the model.
-        """
-        return f'lte0{teff.to_value(config.teff_unit):.0f}-5.00-0.0.PHOENIX-ACES-AGSS-COND-2011.HR.h5'
 
-    def read(self, teff: u.Quantity):
-        """
-        Read a raw PHOENIX model.
 
-        Parameters
-        ----------
-        teff : astropy.units.Quantity
-            The effective temperature of the model.
+@staticmethod
+def get_filename(teff: int) -> str:
+    """
+    Get the filename for a raw PHOENIX model.
 
-        Returns
-        -------
-        wl : astropy.units.Quantity
-            The wavelength axis of the model.
-        fl : astropy.units.Quantity
-            The flux values of the model.
-        """
-        fh5 = h5py.File(self._path/self.get_filename(teff), 'r')
-        wl = fh5['PHOENIX_SPECTRUM/wl'][()] * self._wl_unit_model
-        fl = 10.**fh5['PHOENIX_SPECTRUM/flux'][()] * self._fl_unit_model
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+
+    Returns
+    -------
+    str
+        The filename of the model.
+    
+    Raises
+    ------
+    ValueError
+        If the teff is not in ``ALLOWED_TEFFS``.
+    """
+    if not teff in ALLOWED_TEFFS:
+        raise ValueError(f'Invalid teff: {teff}')
+    return f'lte{teff:05}-5.00-0.0.PHOENIX-ACES-AGSS-COND-2011.HR.h5'
+
+
+def get_url(teff:int)->str:
+    """
+    Get the URL for a PHOENIX model.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+
+    Returns
+    -------
+    str
+        The URL of the model.
+    
+    Raises
+    ------
+    ValueError
+        If the teff is not in ``ALLOWED_TEFFS``.
+    """
+    if not teff in ALLOWED_TEFFS:
+        raise ValueError(f'Invalid teff: {teff}')
+    return BASE_URL + get_filename(teff)
+def get_path(teff:int)->Path:
+    """
+    Get the path for a PHOENIX model.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+
+    Returns
+    -------
+    Path
+        The path of the model.
+    """
+    return GRIDS_PATH / get_filename(teff)
+
+def is_downloaded(teff:int)->bool:
+    """
+    Check if a PHOENIX model is downloaded.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+
+    Returns
+    -------
+    bool
+        True if the model is downloaded, False otherwise.
+    """
+    return get_path(teff).exists()
+
+def _download(teff:int):
+    """
+    Download a PHOENIX model.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+    """
+    url = get_url(teff)
+    path = get_path(teff)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(requests.get(url,timeout=60,stream=True).content)
+
+def download(teff:int):
+    """
+    Download a PHOENIX model.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+    """
+    if not is_downloaded(teff):
+        _download(teff)
+
+def read(teff:int):
+    """
+    Read a PHOENIX model.
+
+    Parameters
+    ----------
+    teff : int
+        The effective temperature of the model in K.
+
+    Returns
+    -------
+    wl : astropy.units.Quantity
+        The wavelength axis of the model.
+    fl : astropy.units.Quantity
+        The flux values of the model.
+    """
+    with h5py.File(get_path(teff), 'r') as fh5:
+        wl = fh5['PHOENIX_SPECTRUM/wl'][()] * WL_UNIT_NEXTGEN
+        fl = 10.**fh5['PHOENIX_SPECTRUM/flux'][()] * FL_UNIT_NEXGEN
         wl = wl.to(config.wl_unit)
         fl = fl.to(config.flux_unit)
         return wl, fl
 
 
 def read_phoenix(
-    teff: u.Quantity,
+    teff: int,
     resolving_power: float,
     w1: u.Quantity,
     w2: u.Quantity,
@@ -73,7 +170,7 @@ def read_phoenix(
 
     Parameters
     ----------
-    teff : astropy.units.Quantity
+    teff : int
         The effective temperature of the model.
     resolving_power : float
         The desired resolving power.
@@ -92,7 +189,7 @@ def read_phoenix(
         The flux values of the model.
     """
 
-    wl, flux = RawReader().read(teff)
+    wl, flux = read(teff)
 
     wl_new: u.Quantity = get_wavelengths(resolving_power, w1.to_value(
         config.wl_unit), w2.to_value(config.wl_unit))*config.wl_unit

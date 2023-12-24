@@ -7,7 +7,7 @@ import pytest
 from time import time
 
 
-from GridPolator.builtins.phoenix_vspec import RawReader
+from GridPolator.builtins import phoenix_vspec
 from GridPolator.binning import get_wavelengths, bin_spectra
 
 
@@ -80,8 +80,9 @@ def test_bin_from_phoenix():
     w1 = 1*u.um
     w2 = 18*u.um
     resolving_power = 50
-    reader = RawReader()
-    wl, fl = reader.read(3000*u.K)
+    teff = 3000
+    phoenix_vspec.download(teff)
+    wl, fl = phoenix_vspec.read(3000)
     new_wl = get_wavelengths(resolving_power, w1.value, w2.value)
     start_time = time()
     new_fl_py = bin_spectra(wl.value, fl.value, new_wl, impl='python')
