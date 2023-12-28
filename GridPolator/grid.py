@@ -9,6 +9,7 @@ from typing import Tuple, List
 from collections import OrderedDict
 import numpy as np
 from jax import numpy as jnp
+from jax import jit
 from jax.scipy.interpolate import RegularGridInterpolator
 from astropy import units as u
 from tqdm.auto import tqdm
@@ -97,19 +98,18 @@ class GridSpectra:
         self._wl = native_wl
         self._interp = interp
         self._params = params
-
-    @staticmethod
-    def _evaluate(
-        interp: List[RegularGridInterpolator],
-        params: Tuple[jnp.ndarray],
-        wl_native: jnp.ndarray,
-        wl: jnp.ndarray
-    ):
-        result = jnp.array([_interp(params) for _interp in interp])
-        if result.ndim != 2:
-            raise ValueError(
-                f'result must have 2 dimensions, but has {result.ndim}.')
-        return jnp.array([RegularGridInterpolator((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)])
+        def _evaluate(
+            interp: List[RegularGridInterpolator],
+            params: Tuple[jnp.ndarray],
+            wl_native: jnp.ndarray,
+            wl: jnp.ndarray
+        ):
+            result = jnp.array([_interp(params) for _interp in interp])
+            if result.ndim != 2:
+                raise ValueError(
+                    f'result must have 2 dimensions, but has {result.ndim}.')
+            return jnp.array([RegularGridInterpolator((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)])
+        self._evaluate = jit(_evaluate)
 
     def evaluate(
         self,
@@ -145,7 +145,6 @@ class GridSpectra:
         if not jnp.all(param_lens == param_lens[0]):
             raise ValueError(
                 f'params must have equal lengths, but have lengths {param_lens}.')
-
         return self._evaluate(self._interp, params, self._wl, wl)
 
     @classmethod
