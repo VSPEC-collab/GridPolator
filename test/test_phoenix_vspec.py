@@ -25,7 +25,6 @@ def test_get_url():
     with pytest.raises(ValueError):
         phoenix_vspec.get_url(0)
 
-# @pytest.mark.skip()
 def test_download():
     """
     Test the download function.
@@ -87,3 +86,6 @@ def test_read_phoenix():
     assert wl.unit == config.wl_unit
     assert fl.unit == config.flux_unit
     # assert len(wl) == len(fl)
+
+if __name__ == '__main__':
+    pytest.main(args=[__file__])
