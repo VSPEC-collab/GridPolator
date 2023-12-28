@@ -8,10 +8,12 @@ from scipy.interpolate import RegularGridInterpolator
 import h5py
 from pathlib import Path
 import requests
+from tqdm.auto import tqdm
 
 from GridPolator import config
 from GridPolator.binning import bin_spectra, get_wavelengths
 from .cache import GRIDS_PATH as BASE_GRIDS_PATH
+from GridPolator import __version__
 
 WL_UNIT_NEXTGEN = u.AA
 FL_UNIT_NEXGEN = u.Unit('erg cm-2 s-1 cm-1')
@@ -119,7 +121,26 @@ def _download(teff:int):
     """
     url = get_url(teff)
     path = get_path(teff)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        headers = {'User-Agent': f'GridPolator v{__version__}'}
+        response = requests.get(url, headers=headers, stream=True, timeout=60)
+        total_size = int(response.headers.get('content-length', 0))
+        response.close()
+        with tqdm(total=total_size, unit='B', unit_scale=True, desc=f'Downloading teff={teff}') as pbar:
+            with open(path, 'wb') as file, requests.get(url, headers=headers, stream=True,timeout=30) as response:
+                for data in response.iter_content(chunk_size=4096):
+                    # Write data to file
+                    file.write(data)
+                    # Update the progress bar
+                    pbar.update(len(data))
+    except Exception as e:
+        raise RuntimeError(f'Failed to download teff={teff}') from e
+
+
+    
+    
     path.write_bytes(requests.get(url,timeout=60,stream=True).content)
 
 def download(teff:int):
