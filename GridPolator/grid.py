@@ -78,7 +78,7 @@ class GridSpectra:
         n_params = len(params)
         if spectra.ndim != n_params + 1:
             raise ValueError(
-                f'spectra must have {n_params} dimensions, but has {spectra.ndim}.')
+                f'spectra must have {n_params + 1} dimensions, but has {spectra.ndim}.')
         for i, (param_name, param_val) in enumerate(params.items()):
             if spectra.shape[i] != len(param_val):
                 raise ValueError(
