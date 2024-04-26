@@ -5,11 +5,16 @@ STScI
 from pathlib import Path
 import requests
 from astropy.io import fits
+from astropy.table import Table
+from astropy import units as u
 import warnings
+from scipy.interpolate import RegularGridInterpolator
 
-from GridPolator import config
+from .. import config
+from .cache import GRIDS_PATH
+from ..binning import get_wavelengths, bin_spectra
 
-DATA_DIR = config.USER_GRIDS_PATH / 'phoenix_st'
+DATA_DIR = GRIDS_PATH / 'phoenix_st'
 
 BASE_URL = 'https://archive.stsci.edu/hlsps/reference-atlases/cdbs/grid/phoenix/'
 
@@ -243,7 +248,7 @@ def exists(teff:int, metallicity:float)->bool:
     path = get_path(teff, metallicity)
     return path.exists()
 
-def read(teff:int, metallicity:float, fail=True)->fits.HDUList:
+def read_fits(teff:int, metallicity:float, fail=True)->fits.HDUList:
     """
     Read a PHOENIX model from disk.
     
@@ -330,3 +335,48 @@ def delete(teff:int, metallicity:float):
         path.unlink()
     else:
         warnings.warn(f"Model not found: {path}") 
+
+def read_raw(teff:int, metallicity:float, logg:float, fail=True)->tuple[u.Quantity, u.Quantity]:
+    """
+    Read a single stellar spectrum.
+    """
+    hdul:fits.HDUList = read_fits(teff, metallicity, fail=fail)
+    secondary = hdul[1]
+    tab = Table(secondary.data)
+    colname = f'g{logg*10:0>2.0f}'
+    wl = tab['WAVELENGTH'] * u.Unit(secondary.header['TUNIT1'].lower())
+    flam = u.Unit('erg cm-2 s-1 AA-1')
+    flux = tab[colname] * flam
+    return wl, flux
+
+def read(
+    teff:int,
+    metallicity:float,
+    logg:float,
+    resolving_power:float,
+    w1: u.Quantity,
+    w2: u.Quantity,
+    impl: str = 'rust'
+)->tuple[u.Quantity, u.Quantity]:
+    """
+    Read a PHOENIX model and return an appropriately binned version
+    """
+    wl, fl = read_raw(teff, metallicity, logg)
+    new_wl = get_wavelengths(resolving_power, w1.to_value(config.wl_unit), w2.to_value(config.wl_unit))
+    
+    try:
+        fl_new = bin_spectra(
+            wl_old=wl.to_value(config.wl_unit),
+            fl_old=fl.to_value(config.flux_unit),
+            wl_new=new_wl,
+            impl=impl,
+        )
+    except ValueError:
+        interp = RegularGridInterpolator(
+            points=[wl.to_value(config.wl_unit)],
+            values=fl.to_value(config.flux_unit)
+        )
+        fl_new = interp(new_wl)
+    
+    return new_wl * config.wl_unit, fl_new * config.flux_unit
+    

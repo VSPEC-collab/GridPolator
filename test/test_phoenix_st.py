@@ -5,10 +5,13 @@ Tests for ``GridPolator.builtins.phoenix_st``.
 from pathlib import Path
 from io import BytesIO
 import pytest
+import numpy as np
 
 from astropy.io import fits
+from astropy import units as u
 
 from GridPolator.builtins import phoenix_st
+from GridPolator import config
 
 
 def test_metalicity_str():
@@ -107,20 +110,52 @@ def test_exists():
     assert not phoenix_st.exists(2000, 0.0)
 
 
-def test_read():
+def test_read_fits():
     """
-    Test the `read()` function.
+    Test the `read_fits()` function.
     """
     dat = phoenix_st.get(2000, 0.0)
     phoenix_st.write(2000, 0.0, dat)
-    assert isinstance(phoenix_st.read(2000, 0.0), fits.HDUList)
+    assert isinstance(phoenix_st.read_fits(2000, 0.0), fits.HDUList)
     expected_path = Path.home() / '.gridpolator' / 'grids' / 'phoenix_st' / \
         'phoenixm00' / 'phoenixm00_2000.fits'
     assert expected_path.exists()
     expected_path.unlink()
     with pytest.raises(FileNotFoundError):
-        phoenix_st.read(2000, 0.0, fail=True)
-    assert isinstance(phoenix_st.read(2000, 0.0, fail=False), fits.HDUList)
+        phoenix_st.read_fits(2000, 0.0, fail=True)
+    assert isinstance(phoenix_st.read_fits(2000, 0.0, fail=False), fits.HDUList)
+    expected_path.unlink()
+
+def test_read_raw():
+    """
+    Test the `read_raw()` function.
+    """
+    assert isinstance(phoenix_st.read_raw(2000, 0.0, 0.0,fail=False), tuple)
+    assert len(phoenix_st.read_raw(2000, 0.0, 0.0)) == 2
+    wl, fl = phoenix_st.read_raw(2000, 0.0, 0.0)
+    assert isinstance(wl, u.Quantity)
+    assert isinstance(fl, u.Quantity)
+    wl2, fl2 = phoenix_st.read_raw(2000, 0.0, 1.0)
+    assert np.all(wl == wl2)
+    assert not np.all(fl == fl2)
+    
+
+def test_read():
+    """
+    Test the `read()` function.
+    """
+    wl, fl = phoenix_st.read(
+        2000,0.0,0.0,400,1*u.um, 2*u.um)
+    assert isinstance(wl, u.Quantity)
+    assert isinstance(fl, u.Quantity)
+    assert len(wl) == len(fl) + 1
+    assert wl.unit == config.wl_unit
+    assert fl.unit == config.flux_unit
+    assert wl[0] == 1*u.um
+    assert wl[-1] == 2*u.um
+    expected_path = Path.home() / '.gridpolator' / 'grids' / 'phoenix_st' / \
+        'phoenixm00' / 'phoenixm00_2000.fits'
+    assert expected_path.exists()
     expected_path.unlink()
 
 
