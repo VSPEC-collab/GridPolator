@@ -3,15 +3,7 @@ GridPolator configurations
 
 This module contains global configurations used in the GridPolator and VSPEC codes.
 """
-from pathlib import Path
 from astropy import units as u
-
-GRIDS_BASE_DIR = Path(__file__).parent / 'grids'
-
-VSPEC_PHOENIX_DIR = GRIDS_BASE_DIR / 'phoenix_vspec'
-
-USER_DATA_PATH = Path.home() / '.gridpolator'
-USER_GRIDS_PATH = USER_DATA_PATH / 'grids'
 
 
 flux_unit = u.Unit('W m-2 um-1')

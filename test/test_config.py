@@ -1,19 +1,14 @@
 """
 Tests for configurations
 """
-
+from astropy import units as u
 from GridPolator import config
 
 
-def test_grids_base_dir():
+def test_units():
     """
-    Tests that the grids base directory exists.
+    Tests that the default units are correct.
     """
-    assert config.GRIDS_BASE_DIR.exists()
-
-
-def test_vspec_phoenix_dir():
-    """
-    Tests that the VSPEC PHOENIX directory exists.
-    """
-    assert config.VSPEC_PHOENIX_DIR.exists()
+    assert config.flux_unit == u.Unit('W m-2 um-1')
+    assert config.wl_unit == u.Unit('um')
+    assert config.teff_unit == u.Unit('K')
