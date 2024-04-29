@@ -152,7 +152,8 @@ def test_read():
     assert wl.unit == config.wl_unit
     assert fl.unit == config.flux_unit
     assert wl[0] == 1*u.um
-    assert wl[-1] == 2*u.um
+    assert wl[-1] > 2*u.um
+    assert wl[-2] < 2*u.um
     expected_path = Path.home() / '.gridpolator' / 'grids' / 'phoenix_st' / \
         'phoenixm00' / 'phoenixm00_2000.fits'
     assert expected_path.exists()
@@ -163,6 +164,8 @@ def test_download():
     """
     Test the `download()` function.
     """
+    if phoenix_st.exists(2000, 0.0):
+        phoenix_st.delete(2000, 0.0)
     assert not phoenix_st.exists(2000, 0.0)
     phoenix_st.download(2000, 0.0)
     assert phoenix_st.exists(2000, 0.0)
@@ -195,8 +198,8 @@ def test_clear():
     """
     Test the `clear()` function.
     """
-    assert not phoenix_st.exists(2000, 0.0)
-    phoenix_st.download(2000, 0.0)
+    if not phoenix_st.exists(2000, 0.0):
+        phoenix_st.download(2000, 0.0)
     assert phoenix_st.exists(2000, 0.0)
     phoenix_st.clear()
     assert not phoenix_st.exists(2000, 0.0)
@@ -205,8 +208,8 @@ def test_delete():
     """
     Test the `delete()` function.
     """
-    assert not phoenix_st.exists(2000, 0.0)
-    phoenix_st.download(2000, 0.0)
+    if not phoenix_st.exists(2000, 0.0):
+        phoenix_st.download(2000, 0.0)
     assert phoenix_st.exists(2000, 0.0)
     phoenix_st.delete(2000, 0.0)
     assert not phoenix_st.exists(2000, 0.0)
