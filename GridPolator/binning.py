@@ -5,10 +5,11 @@ Spectra binning functions
 import numpy as np
 import warnings
 
-from GridPolator._gridpolator import bin_spectra as bin_spectra_rust
+from ._gridpolator import bin_spectra as bin_spectra_rust, get_wavelengths as get_wavelengths_rust
 
 
-def get_wavelengths(resolving_power: int, lam1: float, lam2: float) -> np.ndarray:
+
+def get_wavelengths(resolving_power: int, lam1: float, lam2: float, impl: str = 'rust') -> np.ndarray:
     """
     Get wavelengths
 
@@ -23,11 +24,24 @@ def get_wavelengths(resolving_power: int, lam1: float, lam2: float) -> np.ndarra
         Initial wavelength.
     lam2 : float
         Final wavelength.
+    impl : str, Optional
+        The implementation to use. One of 'rust' or 'python'. Defaults to 'rust'.
 
     Returns
     -------
     numpy.ndarray
         Wavelength points.
+    """
+    if impl == 'rust':
+        return get_wavelengths_rust(resolving_power, lam1, lam2)
+    elif impl == 'python':
+        return get_wavelengths_python(resolving_power, lam1, lam2)
+    else:
+        raise ValueError('impl must be "rust" or "python"')
+    
+def get_wavelengths_python(resolving_power: int, lam1: float, lam2: float) -> np.ndarray:
+    """
+    Get wavelengths. Python implementation.
     """
     lam = lam1
     lams = [lam]
