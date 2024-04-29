@@ -164,6 +164,32 @@ def test_vspec():
     assert isinstance(flux, jnp.ndarray)
     assert flux.shape == (1, 100)
 
+def test_st_grid():
+    """
+    Test the STScI PHOENIX grid.
+    """
+    wl1 = 1*u.um
+    wl2 = 10*u.um
+    resolving_power = 50
+    teffs = [3000, 3100, 3200]
+    metalicities = [-2, -1, 0.3]
+    loggs = [3, 4, 4.5]
+    
+    grid = GridSpectra.from_st(
+        w1=wl1,
+        w2=wl2,
+        resolving_power=resolving_power,
+        teffs=teffs,
+        metalicities=metalicities,
+        loggs=loggs,
+        impl='rust',
+        fail_on_missing=False
+    )
+    new_wl = jnp.linspace(2, 8, 100)
+    flux = grid.evaluate((jnp.array([3050]), jnp.array([0.-0.5]), jnp.array([3.5])), new_wl)
+    assert isinstance(flux, jnp.ndarray)
+    assert flux.shape == (1, 100)
+
 
 if __name__ == '__main__':
     pytest.main(args=[__file__])
