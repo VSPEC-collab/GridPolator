@@ -14,9 +14,10 @@ from jax.scipy.interpolate import RegularGridInterpolator
 from astropy import units as u
 from tqdm.auto import tqdm
 
-from GridPolator.builtins.phoenix_vspec import read_phoenix, is_downloaded, download
-from GridPolator.astropy_units import isclose
-from GridPolator import config
+from .builtins import phoenix_vspec
+from .builtins import phoenix_st
+from .astropy_units import isclose
+from . import config
 
 
 class GridSpectra:
@@ -98,6 +99,7 @@ class GridSpectra:
         self._wl = native_wl
         self._interp = interp
         self._params = params
+
         def _evaluate(
             interp: List[RegularGridInterpolator],
             params: Tuple[jnp.ndarray],
@@ -181,13 +183,15 @@ class GridSpectra:
         specs = []
         wl = None
         for teff in tqdm(teffs, desc='Loading Spectra', total=len(teffs)):
-            if not is_downloaded(teff):
+            if not phoenix_vspec.is_downloaded(teff):
                 if fail_on_missing:
-                    raise FileNotFoundError(f'PHOENIX grid for {teff} not found. Set `fail_on_missing` to False to download.')
+                    raise FileNotFoundError(
+                        f'PHOENIX grid for {teff} not found. Set `fail_on_missing` to False to download.')
                 else:
                     print(f'PHOENIX grid for {teff} not found. Downloading...')
-                    download(teff)
-            wave, flux = read_phoenix(teff, resolving_power, w1, w2, impl=impl)
+                    phoenix_vspec.download(teff)
+            wave, flux = phoenix_vspec.read_phoenix(
+                teff, resolving_power, w1, w2, impl=impl)
             specs.append(flux.to_value(config.flux_unit))
             if wl is None:
                 wl = wave
@@ -195,6 +199,71 @@ class GridSpectra:
                 if not np.all(isclose(wl, wave, 1e-6*u.um)):
                     raise ValueError('Wavelength values are different!')
         params = OrderedDict(
-            [ ('teff', jnp.array(teffs, dtype=float)) ])
+            [('teff', jnp.array(teffs, dtype=float))])
         specs = jnp.array(specs)
         return cls(wl[:-1], params, specs)
+
+    @classmethod
+    def from_st(
+        cls,
+        w1: u.Quantity,
+        w2: u.Quantity,
+        resolving_power: float,
+        teffs: List[int],
+        metalicities: List[float],
+        loggs: List[float],
+        impl: str = 'rust',
+        fail_on_missing: bool = False
+    ):
+        """
+        Load the Grid of Phoenix models from STScI.
+
+        Parameters
+        ----------
+        w1 : astropy.units.Quantity
+            The blue wavelength limit.
+        w2 : astropy.units.Quantity
+            The red wavelength limit.
+        teffs : list of int
+            The temperature coordinates to load.
+        metalicities : list of float
+            The metallicity coordinates to load.
+        loggs : list of float
+            The logg coordinates to load.
+        impl : str, Optional
+            The implementation to use. One of 'rust'
+            or 'python'. Defaults to 'rust'.
+        fail_on_missing : bool, Optional
+            Whether to raise an exception if the grid
+            needs to be downloaded. Defaults to false.
+
+        """
+        spec3d = []
+        teff_ax = jnp.array(teffs, dtype=float)
+        metal_ax = jnp.array(metalicities, dtype=float)
+        logg_ax = jnp.array(loggs, dtype=float)
+
+        for teff in tqdm(teffs, desc='Loading Teff Axis', total=len(teffs)):
+            spec2d = []
+            for metal in tqdm(metalicities, desc='Loading Metallicity Axis', total=len(metalicities)):
+                spec1d = []
+                if not phoenix_st.exists(teff, metal):
+                    if fail_on_missing:
+                        raise FileNotFoundError(
+                            f'STScI PHOENIX grid value for {teff} {metal} not found. Set `fail_on_missing` to False to download.')
+                    else:
+                        print(
+                            f'PHOENIX grid for {teff} {metal} not found. Downloading...')
+                        phoenix_st.download(teff, metal)
+                for logg in tqdm(loggs, desc='Loading Logg Axis', total=len(loggs)):
+                    wave, flux = phoenix_st.read(
+                        teff, metal, logg, resolving_power, w1, w2, impl=impl)
+                    spec1d.append(flux.to_value(config.flux_unit))
+                spec2d.append(spec1d)
+            spec3d.append(spec2d)
+
+        params = OrderedDict(
+            [('teff', teff_ax),
+             ('metallicity', metal_ax),
+             ('logg', logg_ax)])
+        return cls(wave[:-1], params, jnp.array(spec3d))

@@ -1,0 +1,6 @@
+numpy
+astropy
+pathlib
+jax
+tqdm
+requests

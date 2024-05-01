@@ -6,6 +6,7 @@ use numpy::{IntoPyArray, PyArray1, PyReadonlyArray1};
 use pyo3::{pymodule, types::PyModule, PyResult, Python};
 
 mod binning;
+mod wavelength;
 
 #[pymodule]
 fn _gridpolator<'py>(_py: Python<'py>, m: &'py PyModule) -> PyResult<()> {
@@ -21,6 +22,16 @@ fn _gridpolator<'py>(_py: Python<'py>, m: &'py PyModule) -> PyResult<()> {
         let wl_new: Array1<f64> = wl_new.to_owned_array();
         let flux_new = binning::bin_spectra(wl_old, flux_old, &wl_new);
         return flux_new.into_pyarray(_py);
+    }
+    #[pyfn(m)]
+    fn get_wavelengths<'py>(
+        _py: Python<'py>,
+        resolving_power: f64,
+        lam1: f64,
+        lam2: f64,
+    ) -> &'py PyArray1<f64> {
+        let wl = wavelength::get_wavelengths(resolving_power, lam1, lam2);
+        return wl.into_pyarray(_py);
     }
     Ok(())
 }
