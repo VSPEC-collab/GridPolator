@@ -13,7 +13,7 @@ uses. The default units are:
 * **temperature**: ``K``
 """
 
-__version__ = '0.3.2'
+__version__ = '0.4.0'
 
 from GridPolator.grid import GridSpectra
 
