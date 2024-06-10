@@ -64,6 +64,7 @@ jobs:
           make html
           cd ..
           cp docs/source/versions.json docs/build/html/versions.json
+          cp docs/source/redirect.html docs/build/html/redirect.html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4        
