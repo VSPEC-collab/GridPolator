@@ -342,8 +342,10 @@ def read_raw(teff:int, metallicity:float, logg:float, fail=True)->tuple[u.Quanti
     """
     hdul:fits.HDUList = read_fits(teff, metallicity, fail=fail)
     secondary = hdul[1]
+    # pylint: disable-next=no-member
     tab = Table(secondary.data)
     colname = f'g{logg*10:0>2.0f}'
+    # pylint: disable-next=no-member
     wl = tab['WAVELENGTH'] * u.Unit(secondary.header['TUNIT1'].lower())
     flam = u.Unit('erg cm-2 s-1 AA-1')
     flux = tab[colname] * flam

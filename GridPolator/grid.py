@@ -20,6 +20,8 @@ from .builtins import phoenix_st
 from .astropy_units import isclose
 from . import config
 
+NDArray = Union[jnp.ndarray, np.ndarray]
+
 
 class GridSpectra:
     """
@@ -27,14 +29,28 @@ class GridSpectra:
 
     Parameters
     ----------
-    native_wl : jax.numpy.ndarray
+    native_wl : jax.numpy.ndarray or numpy.ndarray
         The native wavelength axis of the grid.
-    params : OrderedDict
+    params : OrderedDict of str and jax.numpy.ndarray or numpy.ndarray
         The other axes of the grid. The order is the same
         as the order of axes in `spectra`.
-    spectra : jax.numpy.ndarray
+    spectra : jax.numpy.ndarray or numpy.ndarray
         The flux values to place in the grid. The last dimension
         should be wavelength.
+    impl : str, Optional
+        The interpolater implementation to use. Either 'scipy' or 'jax'. Defaults to 'scipy'.
+
+    Notes
+    -----
+    A major question a user might ask is how to chose the implementation. It comes down to balancing
+    overhead and performance. The JAX implementation can be noticably faster than Scipy if you plan
+    to evaluate many thousands of times. For instances that will probably be evaluated less than
+    that (e.g. you are making a phase curve with ~100 epochs) Scipy's lack of overhead is likely
+    preferable.
+
+    .. warning::
+        If you use the JAX implementation you must make sure all you input arrays
+        are `jax.numpy.ndarray`.
 
     Examples
     --------
@@ -58,17 +74,17 @@ class GridSpectra:
 
     def __init__(
         self,
-        native_wl: jnp.ndarray,
-        params: OrderedDict[str, jnp.ndarray],
-        spectra: jnp.ndarray,
-        impl:str = 'scipy'
+        native_wl: NDArray,
+        params: OrderedDict[str, NDArray],
+        spectra: NDArray,
+        impl: str = 'scipy'
     ):
         """
         Initialize a grid object.
 
 
         """
-        self._obj_interp:Union[ScipyRegularGridInterpolator,JaxRegularGridInterpolator] = {
+        self._obj_interp: Union[ScipyRegularGridInterpolator, JaxRegularGridInterpolator] = {
             'scipy': ScipyRegularGridInterpolator,
             'jax': JaxRegularGridInterpolator
         }[impl]
@@ -108,7 +124,7 @@ class GridSpectra:
         self._params = params
 
         def _evaluate(
-            interp: List[Union[JaxRegularGridInterpolator,ScipyRegularGridInterpolator]],
+            interp: List[Union[JaxRegularGridInterpolator, ScipyRegularGridInterpolator]],
             params: Tuple[jnp.ndarray],
             wl_native: jnp.ndarray,
             wl: jnp.ndarray
@@ -117,28 +133,38 @@ class GridSpectra:
             if result.ndim != 2:
                 raise ValueError(
                     f'result must have 2 dimensions, but has {result.ndim}.')
-            return jnp.array([self._obj_interp((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)])
+            return jnp.array(
+                [self._obj_interp((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)]
+                )
         self._evaluate = jit(_evaluate) if impl == 'jax' else _evaluate
 
     def evaluate(
         self,
-        params: Tuple[jnp.ndarray],
-        wl: jnp.ndarray = None
-    ) -> jnp.ndarray:
+        params: Tuple[NDArray],
+        wl: NDArray = None
+    ) -> NDArray:
         """
         Evaluate the grid. `args` has the same order as `params` in the `__init__` method.
 
         Parameters
         ----------
-        wl : astropy.units.Quantity
-            The wavelength coordinates to evaluate at.
-        args : list of float
-            The points on the other axes to evaluate the grid.
+        params : tuple of jax.numpy.ndarray or numpy.ndarray
+            The parameter values to evaluate the grid at. They must be in array form,
+            even if they are scalars.
+        wl : jax.numpy.ndarray or numpy.ndarray, optional
+            The wavelength axis to evaluate the grid at. If not provided,
+            the native wavelength axis is used.
 
         Returns
         -------
-        jax.numpy.ndarray
+        jax.numpy.ndarray or numpy.ndarray
             The flux of the grid at the evaluated points.
+
+        Examples
+        --------
+        >>> grid = GridSpectra(native_wl, params, spectra)
+        >>> new_params = (jnp.array([3050, 3100]), jnp.array([0.5, 1])) # Will return two sets of spectra
+        >>> grid.evaluate(new_params)
 
         """
         if wl is None:
@@ -164,7 +190,7 @@ class GridSpectra:
         resolving_power: float,
         teffs: List[int],
         impl_bin: str = 'rust',
-        impl_interp:str='scipy',
+        impl_interp: str = 'scipy',
         fail_on_missing: bool = False
     ):
         """
@@ -180,17 +206,18 @@ class GridSpectra:
             The resolving power to use.
         teffs : list of int
             The temperature coordinates to load.
-        impl : str, Optional
-            The implementation to use. One of 'rust'
-            or 'python'. Defaults to 'rust'.
+        impl_bin : str, Optional
+            The binning implementation to use. Defaults to 'rust'.
+        impl_interp : str, Optional
+            The interpolation implementation to use. Defaults to 'scipy'.
         fail_on_missing : bool, Optional
             Whether to raise an exception if the grid
-            needs to be downloaded. Defaults to false.
+            needs to be downloaded. Defaults to `False`.
 
         """
         specs = []
         wl = None
-        _np = {'scipy':np, 'jax':jnp}[impl_interp]
+        _np = {'scipy': np, 'jax': jnp}[impl_interp]
         for teff in tqdm(teffs, desc='Loading Spectra', total=len(teffs)):
             if not phoenix_vspec.is_downloaded(teff):
                 if fail_on_missing:
@@ -222,7 +249,7 @@ class GridSpectra:
         metalicities: List[float],
         loggs: List[float],
         impl_bin: str = 'rust',
-        impl_interp:str='scipy',
+        impl_interp: str = 'scipy',
         fail_on_missing: bool = False
     ):
         """
@@ -240,9 +267,10 @@ class GridSpectra:
             The metallicity coordinates to load.
         loggs : list of float
             The logg coordinates to load.
-        impl : str, Optional
-            The implementation to use. One of 'rust'
-            or 'python'. Defaults to 'rust'.
+        impl_bin : str, Optional
+            The binning implementation to use. Defaults to 'rust'.
+        impl_interp : str, Optional
+            The interpolation implementation to use. Defaults to 'scipy'.
         fail_on_missing : bool, Optional
             Whether to raise an exception if the grid
             needs to be downloaded. Defaults to false.

@@ -20,7 +20,8 @@ extensions = [
     'sphinx_automodapi.smart_resolver',
     'numpydoc',
     'sphinx.ext.intersphinx',
-    'sphinx_gallery.gen_gallery'
+    'sphinx_gallery.gen_gallery',
+    'sphinx.ext.todo',
 ]
 
 sphinx_gallery_conf = {
@@ -32,6 +33,8 @@ sphinx_gallery_conf = {
 
 templates_path = ['_templates']
 exclude_patterns = []
+todo_include_todos = True
+
 
 
 

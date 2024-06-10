@@ -1,6 +1,4 @@
 """
-The ``GridPolator`` Public API
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The main interaction between the user and ``GridPolator`` is through the
 ``GridSpectra`` class. The ``GridSpectra`` class is used to store, recall,
