@@ -43,6 +43,7 @@ jobs:
             DOCNAME="${BRANCH_NAME}"
           fi
           echo "Using $DOCNAME"
+          echo "DOCNAME=$DOCNAME" >> $GITHUB_ENV
 
 
       - name: Deploy

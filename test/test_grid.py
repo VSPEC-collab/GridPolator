@@ -157,11 +157,12 @@ def test_vspec():
         w1=wl1,
         w2=wl2,
         resolving_power=resolving_power,
-        teffs=teffs
+        teffs=teffs,
+        impl_interp='scipy'
     )
-    new_wl = jnp.linspace(2, 8, 100)
-    flux = grid.evaluate((jnp.array([3050]),), new_wl)
-    assert isinstance(flux, jnp.ndarray)
+    new_wl = np.linspace(2, 8, 100)
+    flux = grid.evaluate((np.array([3050]),), new_wl)
+    assert isinstance(flux, np.ndarray)
     assert flux.shape == (1, 100)
 
 def test_st_grid():
