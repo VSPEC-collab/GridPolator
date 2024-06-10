@@ -59,7 +59,7 @@ jobs:
           force_orphan: true
       - name: Copy versions.json
         run: |
-          git checkout gh-pages
+          git checkout origin/gh-pages
           cp ${{ steps.prep.outputs.DOCNAME }}/versions.json versions.json
           if [[ -z git status --porcelain ]]; then
             echo "No changes"
