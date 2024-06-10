@@ -59,6 +59,8 @@ jobs:
           echo "DEST_DIR=${DOCNAME%%-*}" >> $GITHUB_OUTPUT
 
       - name: Build docs
+        env:
+          DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
         run: |
           cd docs
           make html
