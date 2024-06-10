@@ -27,12 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install .[dev]
           sudo apt-get install graphviz
-      - name: Build docs
-        run: |
-          cd docs
-          make html
-          cd ..
-          cp docs/source/versions.json docs/build/html/versions.json
       - name: Pre-deploy
         id: prep
         env:
@@ -48,7 +42,7 @@ jobs:
           elif [[ $BRANCH_NAME =~ "release" ]]; then
             echo "This is a release branch!"
             VERSION="${BRANCH_NAME##*/}"
-            DOCNAME="${VERSION}"
+            DOCNAME="${VERSION}-beta"
           elif [[ $BRANCH_NAME == "develop" ]]; then
             echo "This is the develop branch!"
             DOCNAME="develop"
@@ -63,6 +57,12 @@ jobs:
           echo "Using $DOCNAME"
           echo "DOCNAME=$DOCNAME" >> $GITHUB_OUTPUT
 
+      - name: Build docs
+        run: |
+          cd docs
+          make html
+          cd ..
+          cp docs/source/versions.json docs/build/html/versions.json
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
@@ -70,7 +70,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
-          destination_dir: ./${{ steps.prep.outputs.DOCNAME }} 
+          destination_dir: ./${{ steps.prep.outputs.DOCNAME%%-* }} 
           keep_files: true
           force_orphan: true
       - name: Copy versions.json
