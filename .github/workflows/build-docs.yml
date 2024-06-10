@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+      - develop
+      - release/*
   pull_request:
     branches:
       - main
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -35,14 +39,23 @@ jobs:
         id: prep
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+          RELEASE: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+          VERSION: ${{ github.event.release.tag_name }}
+
         run: |
-          if [[ $BRANCH_NAME =~ "release" ]]; then
+          if [[ $RELEASE ]]; then
+            DOCNAME="${VERSION##*v}"
+          elif [[ $BRANCH_NAME =~ "release" ]]; then
             VERSION="${BRANCH_NAME##*/}"
-            DOCNAME="${VERSION}-pre"
+            DOCNAME="${VERSION}"
+          elif [[ $BRANCH_NAME == "develop" ]]; then
+            DOCNAME="develop"
           elif [[ $BRANCH_NAME == "main" ]]; then
             DOCNAME="latest"
           else
             DOCNAME="${BRANCH_NAME}"
+            echo "Not sure how to handle $BRANCH_NAME"
+            exit 1
           fi
           echo "Using $DOCNAME"
           echo "DOCNAME=$DOCNAME" >> $GITHUB_OUTPUT
