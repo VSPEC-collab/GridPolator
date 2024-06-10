@@ -50,25 +50,25 @@ def test_grid_1d_bad_init():
 
     with pytest.raises(TypeError):
         GridSpectra(wl, OrderedDict(
-            [(0, jnp.array([3000, 3100, 3200]))]), spectra)
+            [(0, jnp.array([3000, 3100, 3200]))]), spectra,impl='jax')
     with pytest.raises(TypeError):
         GridSpectra(wl, OrderedDict(
-            [('teff', np.array([3000, 3100, 3200]))]), spectra)
+            [('teff', np.array([3000, 3100, 3200]))]), spectra,impl='jax')
     with pytest.raises(ValueError):
         GridSpectra(wl, OrderedDict(
-            [('teff', jnp.array([[3000, 3100, 3200]]))]), spectra)
+            [('teff', jnp.array([[3000, 3100, 3200]]))]), spectra,impl='jax')
     with pytest.raises(ValueError):
         GridSpectra(wl, params, jnp.array([
             [jnp.ones_like(wl) for t in params['teff']],
             [jnp.ones_like(wl) for t in params['teff']],
-        ]))
+        ]), impl='jax')
     with pytest.raises(ValueError):
-        GridSpectra(jnp.array([wl, wl]), params, spectra)
+        GridSpectra(jnp.array([wl, wl]), params, spectra, impl='jax')
     with pytest.raises(ValueError):
         GridSpectra(wl, params, jnp.array(
             [jnp.ones_like(wl) for i in range(5)],
 
-        ))
+        ), impl='jax')
 
 
 def test_grid_2d():
@@ -88,7 +88,7 @@ def test_grid_2d():
             [jnp.ones_like(wl)*t*m for m in params['metallicity']] for t in params['teff']
         ]
     )
-    grid = GridSpectra(wl, params, spectra)
+    grid = GridSpectra(wl, params, spectra, impl='jax')
     # pylint: disable-next=protected-access
     first_point = grid._interp[0]
     test_teff = jnp.array([3050, 3000, 3100, 3150])
@@ -135,7 +135,7 @@ def test_grid_eval_2d():
             [jnp.ones_like(wl)*t*m for m in params['metallicity']] for t in params['teff']
         ]
     )
-    grid = GridSpectra(wl, params, spectra)
+    grid = GridSpectra(wl, params, spectra, impl='jax')
     test_teff = jnp.array([3050, 3100])
     test_metalicity = jnp.array([0.5, 1])
     result = grid.evaluate((test_teff, test_metalicity))
@@ -157,10 +157,38 @@ def test_vspec():
         w1=wl1,
         w2=wl2,
         resolving_power=resolving_power,
-        teffs=teffs
+        teffs=teffs,
+        impl_interp='scipy'
+    )
+    new_wl = np.linspace(2, 8, 100)
+    flux = grid.evaluate((np.array([3050]),), new_wl)
+    assert isinstance(flux, np.ndarray)
+    assert flux.shape == (1, 100)
+
+def test_st_grid():
+    """
+    Test the STScI PHOENIX grid.
+    """
+    wl1 = 1*u.um
+    wl2 = 10*u.um
+    resolving_power = 50
+    teffs = [3000, 3100, 3200]
+    metalicities = [-2, -1, 0.3]
+    loggs = [3, 4, 4.5]
+    
+    grid = GridSpectra.from_st(
+        w1=wl1,
+        w2=wl2,
+        resolving_power=resolving_power,
+        teffs=teffs,
+        metalicities=metalicities,
+        loggs=loggs,
+        impl_bin='rust',
+        impl_interp='jax',
+        fail_on_missing=False
     )
     new_wl = jnp.linspace(2, 8, 100)
-    flux = grid.evaluate((jnp.array([3050]),), new_wl)
+    flux = grid.evaluate((jnp.array([3050]), jnp.array([0.-0.5]), jnp.array([3.5])), new_wl)
     assert isinstance(flux, jnp.ndarray)
     assert flux.shape == (1, 100)
 

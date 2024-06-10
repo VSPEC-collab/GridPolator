@@ -3,7 +3,7 @@ requires = ["maturin>=1.3,<2.0"]
 build-backend = "maturin"
 
 [project]
-version = "0.3.2"
+version = "0.4.0"
 name = "GridPolator"
 authors = [
     {name = "Ashraf Dhahbi", email = "achref.dhahbi@nasa.gov"},
@@ -31,10 +31,19 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-plot = ["matplotlib"]
 dev = [
     "maturin",
     "pytest",
+    "matplotlib",
+    "pep8",
+    "pydata-sphinx-theme",
+    "numpydoc",
+    "sphinx",
+    "sphinx-automodapi",
+    "sphinx-gallery",
+    "sphinxcontrib-bibtex",
+    "sphinxcontrib-napoleon",
+    "sphinxcontrib-bibtex",
 ]
 [project.urls]
 Repository = "https://github.com/VSPEC-collab/GridPolator"
