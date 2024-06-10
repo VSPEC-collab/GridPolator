@@ -42,13 +42,18 @@ jobs:
 
         run: |
           if [[ $RELEASE ]]; then
+            echo "This is a release!"
+            echo $RELEASE
             DOCNAME="${RELEASE_VERSION##*v}"
           elif [[ $BRANCH_NAME =~ "release" ]]; then
+            echo "This is a release branch!"
             VERSION="${BRANCH_NAME##*/}"
             DOCNAME="${VERSION}"
           elif [[ $BRANCH_NAME == "develop" ]]; then
+            echo "This is the develop branch!"
             DOCNAME="develop"
           elif [[ $BRANCH_NAME == "main" ]]; then
+            echo "This is the main branch!"
             DOCNAME="latest"
           else
             DOCNAME="${BRANCH_NAME}"
