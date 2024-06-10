@@ -76,11 +76,13 @@ jobs:
           keep_files: true
           force_orphan: true
       - name: Copy versions.json
+        env:
+          DEST_DIR: ${{ steps.prep.outputs.DOCNAME }}
         run: |
           git fetch
           git checkout gh-pages
-          cp ${{ steps.prep.outputs.DOCNAME }}/versions.json versions.json
-          cp ${{ steps.prep.outputs.DOCNAME }}/redirect.html index.html
+          cp ${DEST_DIR%%-*}/versions.json versions.json
+          cp ${DEST_DIR%%-*}/redirect.html index.html
           if [[ -z $(git status --porcelain) ]]; then
             echo "No changes"
           else
