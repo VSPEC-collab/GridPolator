@@ -30,6 +30,7 @@ jobs:
           cd docs
           make html
           cd ..
+          cp docs/source/versions.json docs/build/html/versions.json
       - name: Pre-deploy
         id: prep
         env:
@@ -54,5 +55,15 @@ jobs:
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
           destination_dir: ./${{ steps.prep.outputs.DOCNAME }} 
-          keep_files: false
+          keep_files: true
           force_orphan: true
+      - name: Copy versions.json
+        run: |
+          cp ${{ steps.prep.outputs.DOCNAME }}/versions.json versions.json
+          if [[ -z git status --porcelain ]]; then
+            echo "No changes"
+          else
+            git add versions.json
+            git commit -m "Update versions.json"
+            git push origin gh-pages
+          fi

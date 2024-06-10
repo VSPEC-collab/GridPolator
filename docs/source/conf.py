@@ -6,6 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
+
 project = 'GridPolator'
 copyright = '2023, VSPEC Collaboration'
 author = 'Ashraf Dhahbi, Ted Johnson'
@@ -41,7 +43,18 @@ todo_include_todos = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo'
+doc_version = os.environ.get('DOCNAME','develop')
+
+html_theme = 'pydata_sphinx_theme'
+html_theme_options = {
+    'navbar_start': ['navbar-logo', 'version-switcher'],
+    'switcher': {
+        'json_url': 'https://vspec-collab.github.io/GridPolator/versions.json',
+        'version_match': doc_version
+    }
+}
+
+
 html_static_path = ['_static']
 
 intersphinx_mapping = {
