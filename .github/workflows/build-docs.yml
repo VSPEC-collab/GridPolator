@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
-      - release/*
   pull_request:
     branches:
       - main
@@ -40,11 +38,11 @@ jobs:
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
           RELEASE: ${{ github.event_name == 'release' && github.event.action == 'published' }}
-          VERSION: ${{ github.event.release.tag_name }}
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}
 
         run: |
           if [[ $RELEASE ]]; then
-            DOCNAME="${VERSION##*v}"
+            DOCNAME="${RELEASE_VERSION##*v}"
           elif [[ $BRANCH_NAME =~ "release" ]]; then
             VERSION="${BRANCH_NAME##*/}"
             DOCNAME="${VERSION}"
