@@ -31,10 +31,19 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-plot = ["matplotlib"]
 dev = [
     "maturin",
     "pytest",
+    "matplotlib",
+    "pep8",
+    "furo==2023.9.10",
+    "numpydoc",
+    "sphinx",
+    "sphinx-automodapi",
+    "sphinx-gallery",
+    "sphinxcontrib-bibtex",
+    "sphinxcontrib-napoleon",
+    "sphinxcontrib-bibtex",
 ]
 [project.urls]
 Repository = "https://github.com/VSPEC-collab/GridPolator"
