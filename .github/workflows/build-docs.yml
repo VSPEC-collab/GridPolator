@@ -66,11 +66,13 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
+        env:
+          DEST_DIR: ${{ steps.prep.outputs.DOCNAME }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
-          destination_dir: ./${{ steps.prep.outputs.DOCNAME%%-* }} 
+          destination_dir: ./${DEST_DIR%%-*}
           keep_files: true
           force_orphan: true
       - name: Copy versions.json
