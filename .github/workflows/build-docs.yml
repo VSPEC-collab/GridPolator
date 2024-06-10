@@ -61,20 +61,32 @@ jobs:
       - name: Build docs
         env:
           DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
+          DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
         run: |
           cd docs
           make html
           cd ..
           cp docs/source/versions.json docs/build/html/versions.json
           cp docs/source/redirect.html docs/build/html/redirect.html
+          mkdir -p docs/build/temp/${DEST_DIR}
+          cp -r docs/build/html docs/build/temp/${DEST_DIR}
+      
+      # - name: Deploy
+      #   env:
+      #     DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
+      #     DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
+      #   run : |
+      #     git fetch
+      #     git checkout gh-pages
+
+
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4        
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/build/html
+          publish_dir: ./docs/build/temp
           publish_branch: gh-pages
-          destination_dir: ./${{ steps.prep.outputs.DEST_DIR }}
           keep_files: true
           force_orphan: true
       - name: Copy versions.json
