@@ -75,14 +75,14 @@ jobs:
           # mkdir -p docs/build/temp/${DEST_DIR}
           # cp -r docs/build/html docs/build/temp/${DEST_DIR}
       
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        env:
-          DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
-          DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
-        with:
-          name: ${DOCNAME}
-          path: docs/build/html
+      # - name: Upload
+      #   uses: actions/upload-artifact@v3
+      #   env:
+      #     DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
+      #     DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
+      #   with:
+      #     name: ${DOCNAME}
+      #     path: docs/build/html
   # deploy:
   #   name: Deploy
   #   runs-on: ubuntu-latest
