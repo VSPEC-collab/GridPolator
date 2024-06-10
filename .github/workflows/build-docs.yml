@@ -31,6 +31,7 @@ jobs:
           make html
           cd ..
       - name: Pre-deploy
+        id: prep
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
@@ -43,7 +44,7 @@ jobs:
             DOCNAME="${BRANCH_NAME}"
           fi
           echo "Using $DOCNAME"
-          echo "DOCNAME=$DOCNAME" >> $GITHUB_ENV
+          echo "DOCNAME=$DOCNAME" >> $GITHUB_OUTPUT
 
 
       - name: Deploy
@@ -52,6 +53,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
-          destination_dir: ./${DOCNAME}
+          destination_dir: ./${{ steps.prep.outputs.DOCNAME }} 
           keep_files: false
           force_orphan: true
