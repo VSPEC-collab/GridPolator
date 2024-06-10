@@ -5,12 +5,13 @@ GridPolator.grid
 The ``GridSpectra`` class stores,
 recalls, and interpolates a grid of spectra.
 """
-from typing import Tuple, List
+from typing import Tuple, List, Union
 from collections import OrderedDict
 import numpy as np
 from jax import numpy as jnp
 from jax import jit
-from jax.scipy.interpolate import RegularGridInterpolator
+from jax.scipy.interpolate import RegularGridInterpolator as JaxRegularGridInterpolator
+from scipy.interpolate import RegularGridInterpolator as ScipyRegularGridInterpolator
 from astropy import units as u
 from tqdm.auto import tqdm
 
@@ -59,20 +60,26 @@ class GridSpectra:
         self,
         native_wl: jnp.ndarray,
         params: OrderedDict[str, jnp.ndarray],
-        spectra: jnp.ndarray
+        spectra: jnp.ndarray,
+        impl:str = 'scipy'
     ):
         """
         Initialize a grid object.
 
 
         """
+        self._obj_interp:Union[ScipyRegularGridInterpolator,JaxRegularGridInterpolator] = {
+            'scipy': ScipyRegularGridInterpolator,
+            'jax': JaxRegularGridInterpolator
+        }[impl]
         for param_name, param_val in params.items():
             if not isinstance(param_name, str):
                 raise TypeError(
                     f'param_name must be a string, but has type {type(param_name)}.')
-            if not isinstance(param_val, jnp.ndarray):
-                raise TypeError(
-                    f'param_val must be a jax.numpy.ndarray, but has type {type(param_val)}.')
+            if impl == 'jax':
+                if not isinstance(param_val, jnp.ndarray):
+                    raise TypeError(
+                        f'param_val must be a jax.numpy.ndarray, but has type {type(param_val)}.')
             if param_val.ndim != 1:
                 raise ValueError(
                     f'param_val must be 1D, but has shape {param_val.shape}.')
@@ -93,7 +100,7 @@ class GridSpectra:
                 f'spectra must have {native_wl.shape[0]} values in the last dimension, but has {spectra.shape[-1]}.')
 
         param_tup = tuple(params.values())
-        interp = [RegularGridInterpolator(
+        interp = [self._obj_interp(
             param_tup, spectra[..., i]) for i in range(wl_len)]
 
         self._wl = native_wl
@@ -101,7 +108,7 @@ class GridSpectra:
         self._params = params
 
         def _evaluate(
-            interp: List[RegularGridInterpolator],
+            interp: List[Union[JaxRegularGridInterpolator,ScipyRegularGridInterpolator]],
             params: Tuple[jnp.ndarray],
             wl_native: jnp.ndarray,
             wl: jnp.ndarray
@@ -110,8 +117,8 @@ class GridSpectra:
             if result.ndim != 2:
                 raise ValueError(
                     f'result must have 2 dimensions, but has {result.ndim}.')
-            return jnp.array([RegularGridInterpolator((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)])
-        self._evaluate = jit(_evaluate)
+            return jnp.array([self._obj_interp((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)])
+        self._evaluate = jit(_evaluate) if impl == 'jax' else _evaluate
 
     def evaluate(
         self,
@@ -156,7 +163,8 @@ class GridSpectra:
         w2: u.Quantity,
         resolving_power: float,
         teffs: List[int],
-        impl: str = 'rust',
+        impl_bin: str = 'rust',
+        impl_interp:str='scipy',
         fail_on_missing: bool = False
     ):
         """
@@ -182,6 +190,7 @@ class GridSpectra:
         """
         specs = []
         wl = None
+        _np = {'scipy':np, 'jax':jnp}[impl_interp]
         for teff in tqdm(teffs, desc='Loading Spectra', total=len(teffs)):
             if not phoenix_vspec.is_downloaded(teff):
                 if fail_on_missing:
@@ -191,7 +200,7 @@ class GridSpectra:
                     print(f'PHOENIX grid for {teff} not found. Downloading...')
                     phoenix_vspec.download(teff)
             wave, flux = phoenix_vspec.read_phoenix(
-                teff, resolving_power, w1, w2, impl=impl)
+                teff, resolving_power, w1, w2, impl=impl_bin)
             specs.append(flux.to_value(config.flux_unit))
             if wl is None:
                 wl = wave
@@ -200,8 +209,8 @@ class GridSpectra:
                     raise ValueError('Wavelength values are different!')
         params = OrderedDict(
             [('teff', jnp.array(teffs, dtype=float))])
-        specs = jnp.array(specs)
-        return cls(wl[:-1], params, specs)
+        specs = _np.array(specs)
+        return cls(wl[:-1], params, specs, impl=impl_interp)
 
     @classmethod
     def from_st(
@@ -212,7 +221,8 @@ class GridSpectra:
         teffs: List[int],
         metalicities: List[float],
         loggs: List[float],
-        impl: str = 'rust',
+        impl_bin: str = 'rust',
+        impl_interp:str='scipy',
         fail_on_missing: bool = False
     ):
         """
@@ -239,9 +249,10 @@ class GridSpectra:
 
         """
         spec3d = []
-        teff_ax = jnp.array(teffs, dtype=float)
-        metal_ax = jnp.array(metalicities, dtype=float)
-        logg_ax = jnp.array(loggs, dtype=float)
+        _np = {'jax': jnp, 'scipy': np}[impl_interp]
+        teff_ax = _np.array(teffs, dtype=float)
+        metal_ax = _np.array(metalicities, dtype=float)
+        logg_ax = _np.array(loggs, dtype=float)
 
         for teff in tqdm(teffs, desc='Loading Teff Axis', total=len(teffs)):
             spec2d = []
@@ -257,7 +268,7 @@ class GridSpectra:
                         phoenix_st.download(teff, metal)
                 for logg in tqdm(loggs, desc='Loading Logg Axis', total=len(loggs)):
                     wave, flux = phoenix_st.read(
-                        teff, metal, logg, resolving_power, w1, w2, impl=impl)
+                        teff, metal, logg, resolving_power, w1, w2, impl=impl_bin)
                     spec1d.append(flux.to_value(config.flux_unit))
                 spec2d.append(spec1d)
             spec3d.append(spec2d)
@@ -266,4 +277,4 @@ class GridSpectra:
             [('teff', teff_ax),
              ('metallicity', metal_ax),
              ('logg', logg_ax)])
-        return cls(wave[:-1], params, jnp.array(spec3d))
+        return cls(wave[:-1], params, _np.array(spec3d), impl=impl_interp)

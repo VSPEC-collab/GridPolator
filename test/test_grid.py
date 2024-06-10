@@ -182,7 +182,7 @@ def test_st_grid():
         teffs=teffs,
         metalicities=metalicities,
         loggs=loggs,
-        impl='rust',
+        impl_bin='rust',
         fail_on_missing=False
     )
     new_wl = jnp.linspace(2, 8, 100)
