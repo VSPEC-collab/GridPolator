@@ -56,6 +56,7 @@ jobs:
           fi
           echo "Using $DOCNAME"
           echo "DOCNAME=$DOCNAME" >> $GITHUB_OUTPUT
+          echo "DEST_DIR=${DOCNAME%%-*}" >> $GITHUB_OUTPUT
 
       - name: Build docs
         run: |
@@ -65,24 +66,20 @@ jobs:
           cp docs/source/versions.json docs/build/html/versions.json
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        env:
-          DEST_DIR: ${{ steps.prep.outputs.DOCNAME }}
+        uses: peaceiris/actions-gh-pages@v4        
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
-          destination_dir: ./${DEST_DIR%%-*}
+          destination_dir: ./${{ steps.prep.outputs.DEST_DIR }}
           keep_files: true
           force_orphan: true
       - name: Copy versions.json
-        env:
-          DEST_DIR: ${{ steps.prep.outputs.DOCNAME }}
         run: |
           git fetch
           git checkout gh-pages
-          cp ${DEST_DIR%%-*}/versions.json versions.json
-          cp ${DEST_DIR%%-*}/redirect.html index.html
+          cp ${{ steps.prep.outputs.DEST_DIR }}/versions.json versions.json
+          cp ${{ steps.prep.outputs.DEST_DIR }}/redirect.html index.html
           if [[ -z $(git status --porcelain) ]]; then
             echo "No changes"
           else
