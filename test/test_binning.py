@@ -27,6 +27,18 @@ def test_get_wavelengths():
     assert wavelengths[-2] <= lam2
     assert np.all(np.diff(np.diff(wavelengths)) > 0)
 
+def test_wl_impl():
+    """
+    Test for `get_wavelengths()` function
+    """
+    resolving_power = 1000
+    lam1 = 400
+    lam2 = 800
+    rs = get_wavelengths(resolving_power, lam1, lam2, impl='rust')
+    py = get_wavelengths(resolving_power, lam1, lam2, impl='python')
+
+    assert np.all(rs == py)
+
 
 @pytest.mark.parametrize(
     "resolving_power, lam1, lam2",
@@ -99,3 +111,6 @@ def test_bin_from_phoenix():
 
     assert np.all(np.isclose(new_fl_py, new_fl_rs, atol=1e-6)
                   ), 'Fluxes do not match.'
+
+if __name__ == "__main__":
+    pytest.main(args=[__file__])

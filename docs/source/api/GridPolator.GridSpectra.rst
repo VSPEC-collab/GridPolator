@@ -11,9 +11,11 @@ GridSpectra
    .. autosummary::
 
       ~GridSpectra.evaluate
+      ~GridSpectra.from_st
       ~GridSpectra.from_vspec
 
    .. rubric:: Methods Documentation
 
    .. automethod:: evaluate
+   .. automethod:: from_st
    .. automethod:: from_vspec
