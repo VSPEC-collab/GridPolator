@@ -4,11 +4,7 @@ version = 3
 
 [[package]]
 name = "GridPolator"
-<<<<<<< HEAD
-version = "0.3.2"
-=======
 version = "0.4.0"
->>>>>>> 6250a3240afa656ba22f37415acb8681591a268f
 dependencies = [
  "ndarray",
  "numpy",
