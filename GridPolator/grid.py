@@ -129,12 +129,19 @@ class GridSpectra:
             wl_native: jnp.ndarray,
             wl: jnp.ndarray
         ):
-            result = jnp.array([_interp(params) for _interp in interp])
+            result = jnp.array([_interp(params) for _interp in interp]) if impl == 'jax' else np.array(
+                [_interp(params) for _interp in interp]
+            )
             if result.ndim != 2:
                 raise ValueError(
                     f'result must have 2 dimensions, but has {result.ndim}.')
-            return jnp.array(
-                [self._obj_interp((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)]
+            if impl == 'jax':
+                return jnp.array(
+                    [self._obj_interp((wl_native,), r)(wl) for r in jnp.rollaxis(result, 1)]
+                    )
+            else:
+                return np.array(
+                    [self._obj_interp((wl_native,), r)(wl) for r in np.rollaxis(result, 1)]
                 )
         self._evaluate = jit(_evaluate) if impl == 'jax' else _evaluate
 
@@ -180,7 +187,10 @@ class GridSpectra:
         if not jnp.all(param_lens == param_lens[0]):
             raise ValueError(
                 f'params must have equal lengths, but have lengths {param_lens}.')
-        return self._evaluate(self._interp, params, self._wl, wl)
+        try:
+            return self._evaluate(self._interp, params, self._wl, wl)
+        except ValueError as e:
+            msg = 'Double check your native wl range. Remember that the `w2` is not included!'
 
     @classmethod
     def from_vspec(

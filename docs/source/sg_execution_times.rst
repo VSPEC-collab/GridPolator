@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.788** total execution time for 2 files **from all galleries**:
+**00:26.877** total execution time for 3 files **from all galleries**:
 
 .. container::
 
@@ -32,8 +32,11 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_plot_compare_jax_scipy.py` (``../../examples/plot_compare_jax_scipy.py``)
+     - 00:26.877
+     - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_use_st_grid.py` (``../../examples/plot_use_st_grid.py``)
-     - 00:00.788
+     - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_use_vspec_grid.py` (``../../examples/plot_use_vspec_grid.py``)
      - 00:00.000
