@@ -30,10 +30,27 @@ jobs:
           cd docs
           make html
           cd ..
+      - name: Pre-deploy
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          if [[ $BRANCH_NAME =~ "release" ]]; then
+            VERSION="${BRANCH_NAME##*/}"
+            DOCNAME="${VERSION}-pre"
+          elif [[ $BRANCH_NAME == "main" ]]; then
+            DOCNAME="latest"
+          else
+            DOCNAME="${BRANCH_NAME}"
+          fi
+          echo "Using $DOCNAME"
+
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html
           publish_branch: gh-pages
+          destination_dir: ./${{ env.DOCNAME }}
+          keep_files: false
           force_orphan: true
