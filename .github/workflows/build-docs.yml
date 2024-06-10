@@ -114,7 +114,7 @@ jobs:
         run : |
           set -e
           git fetch origin gh-pages
-          git checkout --orphan gh-pages
+          git checkout gh-pages
           git pull origin gh-pages
           cp -r docs/build/html ${DEST_DIR}/
           cp ${DEST_DIR}/versions.json versions.json
