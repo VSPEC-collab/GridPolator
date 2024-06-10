@@ -20,7 +20,7 @@ from GridPolator import config
 wave_short = 1*u.um
 wave_long = 10*u.um
 resolving_power = 100
-teffs = [3000,3100,3200] * u.K
+teffs = [3000,3100,3200]
 
 spec = GridSpectra.from_vspec(
     w1=wave_short,
