@@ -68,40 +68,52 @@ jobs:
           cd ..
           cp docs/source/versions.json docs/build/html/versions.json
           cp docs/source/redirect.html docs/build/html/redirect.html
-          mkdir -p docs/build/temp/${DEST_DIR}
-          cp -r docs/build/html docs/build/temp/${DEST_DIR}
+          # mkdir -p docs/build/temp/${DEST_DIR}
+          # cp -r docs/build/html docs/build/temp/${DEST_DIR}
       
+      - name: Deploy
+        env:
+          DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
+          DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
+        run : |
+          git fetch
+          git checkout --orphan gh-pages
+          git pull origin gh-pages
+          cp -r docs/build/html ${DEST_DIR}/
+          cp ${DEST_DIR}/versions.json versions.json
+          cp ${DEST_DIR}/redirect.html index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add versions.json
+          git add index.html
+          git add ${DEST_DIR}/
+          git commit -m "Update ${DOCNAME}"
+          git push origin gh-pages
+
+
+
+
       # - name: Deploy
-      #   env:
-      #     DOCNAME: ${{ steps.prep.outputs.DOCNAME }}
-      #     DEST_DIR: ${{ steps.prep.outputs.DEST_DIR }}
-      #   run : |
+      #   uses: peaceiris/actions-gh-pages@v4        
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./docs/build/temp
+      #     publish_branch: gh-pages
+      #     keep_files: true
+      #     force_orphan: true
+      # - name: Copy versions.json
+      #   run: |
       #     git fetch
       #     git checkout gh-pages
-
-
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4        
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/build/temp
-          publish_branch: gh-pages
-          keep_files: true
-          force_orphan: true
-      - name: Copy versions.json
-        run: |
-          git fetch
-          git checkout gh-pages
-          cp ${{ steps.prep.outputs.DEST_DIR }}/versions.json versions.json
-          cp ${{ steps.prep.outputs.DEST_DIR }}/redirect.html index.html
-          if [[ -z $(git status --porcelain) ]]; then
-            echo "No changes"
-          else
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add versions.json
-            git add index.html
-            git commit -m "Update versions.json and index.html"
-            git push origin gh-pages
-          fi
+      #     cp ${{ steps.prep.outputs.DEST_DIR }}/versions.json versions.json
+      #     cp ${{ steps.prep.outputs.DEST_DIR }}/redirect.html index.html
+      #     if [[ -z $(git status --porcelain) ]]; then
+      #       echo "No changes"
+      #     else
+      #       git config user.name 'github-actions[bot]'
+      #       git config user.email 'github-actions[bot]@users.noreply.github.com'
+      #       git add versions.json
+      #       git add index.html
+      #       git commit -m "Update versions.json and index.html"
+      #       git push origin gh-pages
+      #     fi
