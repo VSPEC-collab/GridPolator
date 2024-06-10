@@ -62,7 +62,7 @@ jobs:
           git fetch
           git checkout gh-pages
           cp ${{ steps.prep.outputs.DOCNAME }}/versions.json versions.json
-          if [[ -z git status --porcelain ]]; then
+          if [[ -z $(git status --porcelain) ]]; then
             echo "No changes"
           else
             git add versions.json
