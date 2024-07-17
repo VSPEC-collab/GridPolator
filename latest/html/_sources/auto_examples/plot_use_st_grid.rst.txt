@@ -82,27 +82,27 @@ Load the default VSPEC PHOENIX grid.
     Loading Metallicity Axis:   0%|          | 0/2 [00:00<?, ?it/s]PHOENIX grid for 3000 -1.0 not found. Downloading...
 
 
-    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 138.04it/s]
+    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 152.95it/s]
 
-    Loading Metallicity Axis:  50%|█████     | 1/2 [00:00<00:00,  2.95it/s]PHOENIX grid for 3000 -0.5 not found. Downloading...
+    Loading Metallicity Axis:  50%|█████     | 1/2 [00:00<00:00,  4.99it/s]PHOENIX grid for 3000 -0.5 not found. Downloading...
 
 
-    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 86.11it/s]
+    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 169.89it/s]
 
-    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  3.31it/s]    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  3.25it/s]
-    Loading Teff Axis:  50%|█████     | 1/2 [00:00<00:00,  1.62it/s]
+    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  5.21it/s]    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  5.17it/s]
+    Loading Teff Axis:  50%|█████     | 1/2 [00:00<00:00,  2.59it/s]
     Loading Metallicity Axis:   0%|          | 0/2 [00:00<?, ?it/s]PHOENIX grid for 3100 -1.0 not found. Downloading...
 
 
-    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 163.43it/s]
+    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 168.68it/s]
 
-    Loading Metallicity Axis:  50%|█████     | 1/2 [00:00<00:00,  3.71it/s]PHOENIX grid for 3100 -0.5 not found. Downloading...
+    Loading Metallicity Axis:  50%|█████     | 1/2 [00:00<00:00,  6.46it/s]PHOENIX grid for 3100 -0.5 not found. Downloading...
 
 
-    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 147.61it/s]
+    Loading Logg Axis:   0%|          | 0/2 [00:00<?, ?it/s]    Loading Logg Axis: 100%|██████████| 2/2 [00:00<00:00, 166.39it/s]
 
-    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  3.76it/s]    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  3.75it/s]
-    Loading Teff Axis: 100%|██████████| 2/2 [00:01<00:00,  1.76it/s]    Loading Teff Axis: 100%|██████████| 2/2 [00:01<00:00,  1.74it/s]
+    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  5.69it/s]    Loading Metallicity Axis: 100%|██████████| 2/2 [00:00<00:00,  5.80it/s]
+    Loading Teff Axis: 100%|██████████| 2/2 [00:00<00:00,  2.76it/s]    Loading Teff Axis: 100%|██████████| 2/2 [00:00<00:00,  2.73it/s]
 
 
 
@@ -150,7 +150,7 @@ wavelength array as well as interpolate between :math:`T_{eff}` values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.332 seconds)
+   **Total running time of the script:** (0 minutes 0.855 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_use_st_grid.py:

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Compare JAX and Scipy &#8212; GridPolator 0.4.0 documentation</title>
+    <title>Compare JAX and Scipy &#8212; GridPolator 0.4.1 documentation</title>
   
   
   
@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
@@ -36,16 +36,16 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=6c02275b"></script>
+    <script src="../_static/documentation_options.js?v=c87aa342"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/plot_compare_jax_scipy';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.15.3';
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://vspec-collab.github.io/GridPolator/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = 'latest';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
@@ -108,7 +108,7 @@
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
-  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
   </button>
   
@@ -118,6 +118,8 @@
       <div class="navbar-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="../index.html">
   
@@ -126,7 +128,7 @@
   
   
   
-    <p class="title logo__title">GridPolator 0.4.0 documentation</p>
+    <p class="title logo__title">GridPolator 0.4.1 documentation</p>
   
 </a></div>
     
@@ -136,7 +138,7 @@ document.write(`
   <div class="version-switcher__container dropdown">
     <button id="pst-version-switcher-button-2"
       type="button"
-      class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
       data-bs-toggle="dropdown"
       aria-haspopup="listbox"
       aria-controls="pst-version-switcher-list-2"
@@ -161,24 +163,24 @@ document.write(`
     <div class="me-auto navbar-header-items__center">
       
         <div class="navbar-item">
-<nav class="navbar-nav">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item pst-header-nav-item">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../intro.html">
     Introduction
   </a>
 </li>
 
 
-<li class="nav-item pst-header-nav-item">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../api.html">
     The GridPolator API
   </a>
 </li>
 
 
-<li class="nav-item pst-header-nav-item current active">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="index.html">
     Examples
   </a>
@@ -197,7 +199,7 @@ document.write(`
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -211,10 +213,10 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script></div>
@@ -228,7 +230,7 @@ document.write(`
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -239,7 +241,7 @@ document.write(`
   
 
   
-    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
       <span class="fa-solid fa-outdent"></span>
     </button>
   
@@ -265,24 +267,24 @@ document.write(`
           
           
             <div class="navbar-item">
-<nav class="navbar-nav">
+<nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item pst-header-nav-item">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../intro.html">
     Introduction
   </a>
 </li>
 
 
-<li class="nav-item pst-header-nav-item">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../api.html">
     The GridPolator API
   </a>
 </li>
 
 
-<li class="nav-item pst-header-nav-item current active">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="index.html">
     Examples
   </a>
@@ -302,10 +304,10 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script></div>
@@ -432,145 +434,121 @@ interpolation backend.</p>
 
 Downloading teff=2800:   0%|          | 0.00/33.9M [00:00&lt;?, ?B/s]
 
-Downloading teff=2800:   0%|          | 4.10k/33.9M [00:00&lt;1:00:38, 9.31kB/s]
+Downloading teff=2800:   0%|          | 4.10k/33.9M [00:00&lt;53:06, 10.6kB/s]
 
-Downloading teff=2800:   0%|          | 16.4k/33.9M [00:00&lt;15:37, 36.2kB/s]
+Downloading teff=2800:   0%|          | 45.1k/33.9M [00:00&lt;04:46, 118kB/s]
 
-Downloading teff=2800:   0%|          | 53.2k/33.9M [00:00&lt;04:48, 117kB/s]
+Downloading teff=2800:   0%|          | 123k/33.9M [00:00&lt;02:18, 243kB/s]
 
-Downloading teff=2800:   0%|          | 139k/33.9M [00:00&lt;01:51, 302kB/s]
+Downloading teff=2800:   1%|▏         | 500k/33.9M [00:00&lt;00:30, 1.09MB/s]
 
-Downloading teff=2800:   1%|          | 295k/33.9M [00:00&lt;00:54, 616kB/s]
+Downloading teff=2800:   4%|▎         | 1.25M/33.9M [00:00&lt;00:14, 2.25MB/s]
 
-Downloading teff=2800:   2%|▏         | 606k/33.9M [00:00&lt;00:26, 1.25MB/s]
+Downloading teff=2800:   9%|▉         | 3.20M/33.9M [00:01&lt;00:04, 6.22MB/s]
 
-Downloading teff=2800:   4%|▎         | 1.25M/33.9M [00:01&lt;00:12, 2.57MB/s]
+Downloading teff=2800:  19%|█▉        | 6.57M/33.9M [00:01&lt;00:02, 13.0MB/s]
 
-Downloading teff=2800:   7%|▋         | 2.52M/33.9M [00:01&lt;00:06, 5.18MB/s]
+Downloading teff=2800:  29%|██▉       | 9.98M/33.9M [00:01&lt;00:01, 18.5MB/s]
 
-Downloading teff=2800:  15%|█▌        | 5.09M/33.9M [00:01&lt;00:02, 10.5MB/s]
+Downloading teff=2800:  38%|███▊      | 12.9M/33.9M [00:01&lt;00:01, 17.6MB/s]
 
-Downloading teff=2800:  23%|██▎       | 7.74M/33.9M [00:01&lt;00:01, 14.5MB/s]
+Downloading teff=2800:  48%|████▊     | 16.3M/33.9M [00:01&lt;00:00, 21.5MB/s]
 
-Downloading teff=2800:  30%|███       | 10.3M/33.9M [00:01&lt;00:01, 17.0MB/s]
+Downloading teff=2800:  58%|█████▊    | 19.8M/33.9M [00:01&lt;00:00, 24.9MB/s]
 
-Downloading teff=2800:  38%|███▊      | 12.8M/33.9M [00:01&lt;00:01, 18.7MB/s]
+Downloading teff=2800:  69%|██████▉   | 23.4M/33.9M [00:01&lt;00:00, 27.9MB/s]
 
-Downloading teff=2800:  46%|████▋     | 15.7M/33.9M [00:01&lt;00:00, 20.8MB/s]
+Downloading teff=2800:  78%|███████▊  | 26.4M/33.9M [00:01&lt;00:00, 23.4MB/s]
 
-Downloading teff=2800:  54%|█████▎    | 18.2M/33.9M [00:01&lt;00:00, 21.2MB/s]
+Downloading teff=2800:  88%|████████▊ | 30.0M/33.9M [00:02&lt;00:00, 26.4MB/s]
 
-Downloading teff=2800:  62%|██████▏   | 21.1M/33.9M [00:02&lt;00:00, 22.9MB/s]
+Downloading teff=2800:  98%|█████████▊| 33.4M/33.9M [00:02&lt;00:00, 28.3MB/s]
+Downloading teff=2800: 100%|██████████| 33.9M/33.9M [00:02&lt;00:00, 15.9MB/s]
 
-Downloading teff=2800:  71%|███████▏  | 24.2M/33.9M [00:02&lt;00:00, 24.2MB/s]
-
-Downloading teff=2800:  80%|████████  | 27.2M/33.9M [00:02&lt;00:00, 24.9MB/s]
-
-Downloading teff=2800:  89%|████████▊ | 30.0M/33.9M [00:02&lt;00:00, 25.2MB/s]
-
-Downloading teff=2800:  97%|█████████▋| 32.9M/33.9M [00:02&lt;00:00, 25.4MB/s]
-Downloading teff=2800: 100%|██████████| 33.9M/33.9M [00:02&lt;00:00, 13.8MB/s]
-
-Loading Spectra:  17%|█▋        | 1/6 [00:05&lt;00:29,  5.97s/it]PHOENIX grid for 2900 not found. Downloading...
+Loading Spectra:  17%|█▋        | 1/6 [00:02&lt;00:14,  2.80s/it]PHOENIX grid for 2900 not found. Downloading...
 
 
 Downloading teff=2900:   0%|          | 0.00/33.8M [00:00&lt;?, ?B/s]
 
-Downloading teff=2900:   0%|          | 4.10k/33.8M [00:00&lt;1:04:11, 8.78kB/s]
+Downloading teff=2900:   0%|          | 4.10k/33.8M [00:01&lt;3:14:44, 2.90kB/s]
 
-Downloading teff=2900:   0%|          | 16.4k/33.8M [00:00&lt;16:18, 34.6kB/s]
+Downloading teff=2900:   0%|          | 41.0k/33.8M [00:01&lt;16:44, 33.6kB/s]
 
-Downloading teff=2900:   0%|          | 45.1k/33.8M [00:00&lt;06:00, 93.7kB/s]
+Downloading teff=2900:   1%|          | 209k/33.8M [00:01&lt;02:55, 192kB/s]
 
-Downloading teff=2900:   0%|          | 115k/33.8M [00:00&lt;02:20, 240kB/s]
+Downloading teff=2900:   3%|▎         | 881k/33.8M [00:01&lt;00:33, 993kB/s]
 
-Downloading teff=2900:   1%|          | 246k/33.8M [00:00&lt;01:06, 502kB/s]
+Downloading teff=2900:   5%|▌         | 1.80M/33.8M [00:02&lt;00:16, 1.96MB/s]
 
-Downloading teff=2900:   2%|▏         | 520k/33.8M [00:01&lt;00:31, 1.06MB/s]
+Downloading teff=2900:  12%|█▏        | 4.23M/33.8M [00:02&lt;00:05, 5.50MB/s]
 
-Downloading teff=2900:   3%|▎         | 1.07M/33.8M [00:01&lt;00:14, 2.19MB/s]
+Downloading teff=2900:  23%|██▎       | 7.65M/33.8M [00:02&lt;00:02, 10.8MB/s]
 
-Downloading teff=2900:   6%|▋         | 2.17M/33.8M [00:01&lt;00:07, 4.42MB/s]
+Downloading teff=2900:  32%|███▏      | 10.8M/33.8M [00:02&lt;00:01, 15.2MB/s]
 
-Downloading teff=2900:  13%|█▎        | 4.36M/33.8M [00:01&lt;00:03, 8.89MB/s]
+Downloading teff=2900:  42%|████▏     | 14.2M/33.8M [00:02&lt;00:01, 16.5MB/s]
 
-Downloading teff=2900:  22%|██▏       | 7.39M/33.8M [00:01&lt;00:01, 14.3MB/s]
+Downloading teff=2900:  52%|█████▏    | 17.7M/33.8M [00:02&lt;00:00, 20.5MB/s]
 
-Downloading teff=2900:  30%|███       | 10.2M/33.8M [00:01&lt;00:01, 17.5MB/s]
+Downloading teff=2900:  62%|██████▏   | 21.0M/33.8M [00:02&lt;00:00, 23.3MB/s]
 
-Downloading teff=2900:  37%|███▋      | 12.6M/33.8M [00:01&lt;00:01, 18.6MB/s]
+Downloading teff=2900:  72%|███████▏  | 24.4M/33.8M [00:02&lt;00:00, 26.2MB/s]
 
-Downloading teff=2900:  45%|████▌     | 15.4M/33.8M [00:01&lt;00:00, 20.5MB/s]
+Downloading teff=2900:  83%|████████▎ | 28.0M/33.8M [00:02&lt;00:00, 28.6MB/s]
 
-Downloading teff=2900:  54%|█████▍    | 18.3M/33.8M [00:01&lt;00:00, 22.3MB/s]
+Downloading teff=2900:  93%|█████████▎| 31.6M/33.8M [00:03&lt;00:00, 25.4MB/s]
+Downloading teff=2900: 100%|██████████| 33.8M/33.8M [00:03&lt;00:00, 10.7MB/s]
 
-Downloading teff=2900:  62%|██████▏   | 21.0M/33.8M [00:02&lt;00:00, 22.7MB/s]
-
-Downloading teff=2900:  71%|███████   | 24.1M/33.8M [00:02&lt;00:00, 24.1MB/s]
-
-Downloading teff=2900:  79%|███████▉  | 26.9M/33.8M [00:02&lt;00:00, 24.4MB/s]
-
-Downloading teff=2900:  88%|████████▊ | 29.7M/33.8M [00:02&lt;00:00, 24.5MB/s]
-
-Downloading teff=2900:  96%|█████████▋| 32.6M/33.8M [00:02&lt;00:00, 24.9MB/s]
-Downloading teff=2900: 100%|██████████| 33.8M/33.8M [00:02&lt;00:00, 13.6MB/s]
-
-Loading Spectra:  33%|███▎      | 2/6 [00:11&lt;00:23,  5.90s/it]
-Loading Spectra:  50%|█████     | 3/6 [00:12&lt;00:10,  3.36s/it]
-Loading Spectra:  67%|██████▋   | 4/6 [00:12&lt;00:04,  2.17s/it]
-Loading Spectra:  83%|████████▎ | 5/6 [00:12&lt;00:01,  1.50s/it]PHOENIX grid for 3300 not found. Downloading...
+Loading Spectra:  33%|███▎      | 2/6 [00:06&lt;00:13,  3.43s/it]
+Loading Spectra:  50%|█████     | 3/6 [00:06&lt;00:06,  2.00s/it]
+Loading Spectra:  67%|██████▋   | 4/6 [00:07&lt;00:02,  1.33s/it]
+Loading Spectra:  83%|████████▎ | 5/6 [00:07&lt;00:00,  1.04it/s]PHOENIX grid for 3300 not found. Downloading...
 
 
 Downloading teff=3300:   0%|          | 0.00/33.6M [00:00&lt;?, ?B/s]
 
-Downloading teff=3300:   0%|          | 4.10k/33.6M [00:00&lt;1:02:56, 8.88kB/s]
+Downloading teff=3300:   0%|          | 4.10k/33.6M [00:00&lt;1:20:10, 6.97kB/s]
 
-Downloading teff=3300:   0%|          | 20.5k/33.6M [00:00&lt;12:42, 44.0kB/s]
+Downloading teff=3300:   0%|          | 45.1k/33.6M [00:00&lt;07:40, 72.8kB/s]
 
-Downloading teff=3300:   0%|          | 57.3k/33.6M [00:00&lt;04:40, 119kB/s]
+Downloading teff=3300:   1%|          | 184k/33.6M [00:00&lt;01:42, 326kB/s]
 
-Downloading teff=3300:   0%|          | 139k/33.6M [00:00&lt;01:56, 286kB/s]
+Downloading teff=3300:   1%|▏         | 471k/33.6M [00:01&lt;00:44, 736kB/s]
 
-Downloading teff=3300:   1%|          | 299k/33.6M [00:00&lt;00:55, 601kB/s]
+Downloading teff=3300:   4%|▍         | 1.47M/33.6M [00:01&lt;00:12, 2.63MB/s]
 
-Downloading teff=3300:   2%|▏         | 602k/33.6M [00:01&lt;00:27, 1.19MB/s]
+Downloading teff=3300:  10%|▉         | 3.32M/33.6M [00:01&lt;00:04, 6.25MB/s]
 
-Downloading teff=3300:   4%|▎         | 1.26M/33.6M [00:01&lt;00:12, 2.51MB/s]
+Downloading teff=3300:  16%|█▌        | 5.25M/33.6M [00:01&lt;00:04, 6.77MB/s]
 
-Downloading teff=3300:   8%|▊         | 2.53M/33.6M [00:01&lt;00:06, 5.03MB/s]
+Downloading teff=3300:  26%|██▌       | 8.64M/33.6M [00:01&lt;00:02, 12.2MB/s]
 
-Downloading teff=3300:  15%|█▌        | 5.09M/33.6M [00:01&lt;00:02, 10.1MB/s]
+Downloading teff=3300:  31%|███       | 10.3M/33.6M [00:02&lt;00:03, 6.73MB/s]
 
-Downloading teff=3300:  24%|██▍       | 8.20M/33.6M [00:01&lt;00:01, 15.2MB/s]
+Downloading teff=3300:  40%|███▉      | 13.4M/33.6M [00:02&lt;00:01, 10.1MB/s]
 
-Downloading teff=3300:  33%|███▎      | 11.0M/33.6M [00:01&lt;00:01, 17.9MB/s]
+Downloading teff=3300:  51%|█████     | 17.1M/33.6M [00:02&lt;00:01, 14.6MB/s]
 
-Downloading teff=3300:  41%|████▏     | 13.9M/33.6M [00:01&lt;00:00, 20.0MB/s]
+Downloading teff=3300:  60%|██████    | 20.2M/33.6M [00:02&lt;00:00, 17.5MB/s]
 
-Downloading teff=3300:  49%|████▉     | 16.4M/33.6M [00:01&lt;00:00, 20.6MB/s]
+Downloading teff=3300:  70%|███████   | 23.6M/33.6M [00:02&lt;00:00, 21.1MB/s]
 
-Downloading teff=3300:  58%|█████▊    | 19.4M/33.6M [00:01&lt;00:00, 22.1MB/s]
+Downloading teff=3300:  81%|████████  | 27.2M/33.6M [00:02&lt;00:00, 24.4MB/s]
 
-Downloading teff=3300:  67%|██████▋   | 22.3M/33.6M [00:02&lt;00:00, 23.2MB/s]
+Downloading teff=3300:  90%|████████▉ | 30.2M/33.6M [00:02&lt;00:00, 22.6MB/s]
+Downloading teff=3300: 100%|██████████| 33.6M/33.6M [00:02&lt;00:00, 11.5MB/s]
 
-Downloading teff=3300:  75%|███████▌  | 25.2M/33.6M [00:02&lt;00:00, 23.6MB/s]
-
-Downloading teff=3300:  84%|████████▍ | 28.3M/33.6M [00:02&lt;00:00, 24.6MB/s]
-
-Downloading teff=3300:  93%|█████████▎| 31.1M/33.6M [00:02&lt;00:00, 24.5MB/s]
-Downloading teff=3300: 100%|██████████| 33.6M/33.6M [00:02&lt;00:00, 13.6MB/s]
-
-Loading Spectra: 100%|██████████| 6/6 [00:18&lt;00:00,  2.98s/it]
-Loading Spectra: 100%|██████████| 6/6 [00:18&lt;00:00,  3.11s/it]
+Loading Spectra: 100%|██████████| 6/6 [00:11&lt;00:00,  1.85s/it]
+Loading Spectra: 100%|██████████| 6/6 [00:11&lt;00:00,  1.86s/it]
 
 Loading Spectra:   0%|          | 0/6 [00:00&lt;?, ?it/s]
-Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.09it/s]
-Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.16it/s]
-Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.24it/s]
-Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.29it/s]
-Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.20it/s]
-Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.25it/s]
-Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.23it/s]
+Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.33it/s]
+Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.33it/s]
+Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.33it/s]
+Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.33it/s]
+Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.33it/s]
+Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.33it/s]
+Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.33it/s]
 </pre></div>
 </div>
 </section>
@@ -592,8 +570,8 @@ Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.23
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scipy took </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">end</span></a><span class="w"> </span><span class="o">-</span><span class="w"> </span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">start</span></a><span class="si">}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>JAX took 5.575991630554199 seconds
-Scipy took 0.005448579788208008 seconds
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>JAX took 4.853564977645874 seconds
+Scipy took 0.004877328872680664 seconds
 </pre></div>
 </div>
 </section>
@@ -613,10 +591,10 @@ Scipy took 0.005448579788208008 seconds
 <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scipy took </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">end</span></a><span class="w"> </span><span class="o">-</span><span class="w"> </span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">start</span></a><span class="si">}</span><span class="s1"> seconds</span><span class="se">\n\t</span><span class="s1">that</span><span class="se">\&#39;</span><span class="s1">s </span><span class="si">{</span><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">end</span></a><span class="w"> </span><span class="o">-</span><span class="w"> </span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">start</span></a><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="si">}</span><span class="s1"> seconds per call&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>JAX took 0.3670065402984619 seconds
-        that&#39;s 0.0003670065402984619 seconds per call
-Scipy took 5.117958307266235 seconds
-        that&#39;s 0.005117958307266236 seconds per call
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>JAX took 0.34310388565063477 seconds
+        that&#39;s 0.0003431038856506348 seconds per call
+Scipy took 4.46177864074707 seconds
+        that&#39;s 0.00446177864074707 seconds per call
 </pre></div>
 </div>
 </section>
@@ -674,25 +652,25 @@ Of course, the costs change depending on the complexity of the grid.</p>
 </pre></div>
 </div>
 <img src="../_images/sphx_glr_plot_compare_jax_scipy_001.png" srcset="../_images/sphx_glr_plot_compare_jax_scipy_001.png" alt="plot compare jax scipy" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Loading Spectra:   0%|          | 0/6 [00:00&lt;?, ?it/s]
-Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.33it/s]
-Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.32it/s]
-Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.32it/s]
-Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.33it/s]
-Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.33it/s]
-Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32it/s]
-Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32it/s]
+Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.37it/s]
+Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.36it/s]
+Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.36it/s]
+Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.34it/s]
+Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.35it/s]
+Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.35it/s]
+Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.35it/s]
 
 Loading Spectra:   0%|          | 0/6 [00:00&lt;?, ?it/s]
-Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.32it/s]
-Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.32it/s]
-Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.32it/s]
-Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.32it/s]
-Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.32it/s]
-Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32it/s]
+Loading Spectra:  17%|█▋        | 1/6 [00:00&lt;00:01,  3.36it/s]
+Loading Spectra:  33%|███▎      | 2/6 [00:00&lt;00:01,  3.36it/s]
+Loading Spectra:  50%|█████     | 3/6 [00:00&lt;00:00,  3.36it/s]
+Loading Spectra:  67%|██████▋   | 4/6 [00:01&lt;00:00,  3.36it/s]
+Loading Spectra:  83%|████████▎ | 5/6 [00:01&lt;00:00,  3.36it/s]
+Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.27it/s]
 Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32it/s]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 57.394 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 46.011 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-compare-jax-scipy-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/0ae35c7e1f4cfab5440a8458c7c19db6/plot_compare_jax_scipy.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_compare_jax_scipy.ipynb</span></code></a></p>
@@ -771,8 +749,8 @@ Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -792,7 +770,7 @@ Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.5.
     <br/>
   </p>
 </div>
@@ -805,7 +783,7 @@ Loading Spectra: 100%|██████████| 6/6 [00:01&lt;00:00,  3.32
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
 </p></div>
       
     </div>
