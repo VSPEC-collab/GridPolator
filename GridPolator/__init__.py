@@ -11,8 +11,7 @@ uses. The default units are:
 * **temperature**: ``K``
 """
 
-__version__ = '0.4.0'
-
 from GridPolator.grid import GridSpectra
 
 from GridPolator.config import flux_unit, wl_unit, teff_unit
+from .config import __version__

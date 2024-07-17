@@ -13,7 +13,7 @@ from tqdm.auto import tqdm
 from GridPolator import config
 from GridPolator.binning import bin_spectra, get_wavelengths
 from .cache import GRIDS_PATH as BASE_GRIDS_PATH
-from GridPolator import __version__
+from ..config import user_agent
 
 WL_UNIT_NEXTGEN = u.AA
 FL_UNIT_NEXGEN = u.Unit('erg cm-2 s-1 cm-1')
@@ -124,7 +124,7 @@ def _download(teff:int):
     
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
-        headers = {'User-Agent': f'GridPolator v{__version__}'}
+        headers = {'User-Agent': user_agent}
         response = requests.get(url, headers=headers, stream=True, timeout=60)
         total_size = int(response.headers.get('content-length', 0))
         response.close()
@@ -137,11 +137,6 @@ def _download(teff:int):
                     pbar.update(len(data))
     except Exception as e:
         raise RuntimeError(f'Failed to download teff={teff}') from e
-
-
-    
-    
-    path.write_bytes(requests.get(url,timeout=60,stream=True).content)
 
 def download(teff:int):
     """
