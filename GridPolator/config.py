@@ -5,6 +5,10 @@ This module contains global configurations used in the GridPolator and VSPEC cod
 """
 from astropy import units as u
 
+__version__ = '0.4.1'
+
+user_agent = f'GridPolator/{__version__}'
+
 flux_unit = u.Unit('W m-2 um-1')
 """
 The standard unit of flux.

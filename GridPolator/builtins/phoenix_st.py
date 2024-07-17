@@ -207,7 +207,8 @@ def get(teff:int, metallicity:float)->bytes:
         If request fails.
     """
     url = get_url(teff, metallicity)
-    result = requests.get(url, timeout=30)
+    headers = {'User-Agent': config.user_agent}
+    result = requests.get(url, timeout=30, headers=headers)
     if result.status_code != 200:
         raise FileNotFoundError(f"Failed to download teff={teff} metallicity={metallicity:.1f}")
     return result.content

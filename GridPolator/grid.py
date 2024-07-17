@@ -117,7 +117,7 @@ class GridSpectra:
 
         param_tup = tuple(params.values())
         interp = [self._obj_interp(
-            param_tup, spectra[..., i]) for i in range(wl_len)]
+            param_tup, spectra[..., i], bounds_error=False, fill_value=None) for i in range(wl_len)]
 
         self._wl = native_wl
         self._interp = interp
