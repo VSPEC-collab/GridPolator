@@ -43,7 +43,7 @@ todo_include_todos = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-doc_version = os.environ.get('DOCNAME','develop')
+doc_version = os.environ.get('DOCNAME','latest')
 
 html_theme = 'pydata_sphinx_theme'
 html_theme_options = {
