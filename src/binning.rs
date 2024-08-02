@@ -44,7 +44,10 @@ pub fn bin_spectra(
         // Get the upper bound of the bin.
         let lower:f64;
         if i == 0 {
-            lower = lam_cen
+            let next_wl = wl_new[i+1];
+            let resolving_power = lam_cen / (next_wl - lam_cen);
+            let dl = upper - lam_cen;
+            lower = lam_cen - dl * (resolving_power/(1.0+resolving_power));
         }
         else {
             lower = 0.5*(lam_cen+wl_new[i-1]);
