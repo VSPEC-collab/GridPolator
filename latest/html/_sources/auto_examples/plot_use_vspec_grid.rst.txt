@@ -76,58 +76,53 @@ Load the default VSPEC PHOENIX grid.
     Loading Spectra:   0%|          | 0/3 [00:00<?, ?it/s]PHOENIX grid for 3000 not found. Downloading...
 
     Downloading teff=3000:   0%|          | 0.00/33.8M [00:00<?, ?B/s]
-    Downloading teff=3000:   0%|          | 4.10k/33.8M [00:00<49:50, 11.3kB/s]
-    Downloading teff=3000:   0%|          | 45.1k/33.8M [00:00<04:54, 115kB/s] 
-    Downloading teff=3000:   0%|          | 139k/33.8M [00:00<01:55, 292kB/s] 
-    Downloading teff=3000:   2%|▏         | 520k/33.8M [00:00<00:30, 1.09MB/s]
-    Downloading teff=3000:   4%|▎         | 1.25M/33.8M [00:00<00:14, 2.31MB/s]
-    Downloading teff=3000:   9%|▉         | 3.11M/33.8M [00:01<00:04, 6.17MB/s]
-    Downloading teff=3000:  19%|█▊        | 6.31M/33.8M [00:01<00:02, 12.7MB/s]
-    Downloading teff=3000:  28%|██▊       | 9.40M/33.8M [00:01<00:01, 17.3MB/s]
-    Downloading teff=3000:  37%|███▋      | 12.6M/33.8M [00:01<00:00, 21.3MB/s]
-    Downloading teff=3000:  47%|████▋     | 16.0M/33.8M [00:01<00:00, 23.7MB/s]
-    Downloading teff=3000:  58%|█████▊    | 19.5M/33.8M [00:01<00:00, 26.8MB/s]
-    Downloading teff=3000:  68%|██████▊   | 22.9M/33.8M [00:01<00:00, 28.9MB/s]
-    Downloading teff=3000:  78%|███████▊  | 26.2M/33.8M [00:01<00:00, 29.6MB/s]
-    Downloading teff=3000:  87%|████████▋ | 29.3M/33.8M [00:01<00:00, 26.9MB/s]
-    Downloading teff=3000:  95%|█████████▌| 32.1M/33.8M [00:02<00:00, 26.4MB/s]    Downloading teff=3000: 100%|██████████| 33.8M/33.8M [00:02<00:00, 16.0MB/s]
-    Loading Spectra:  33%|███▎      | 1/3 [00:02<00:05,  2.96s/it]PHOENIX grid for 3100 not found. Downloading...
+    Downloading teff=3000:   0%|          | 4.10k/33.8M [00:00<46:45, 12.0kB/s]
+    Downloading teff=3000:   0%|          | 49.2k/33.8M [00:00<04:56, 114kB/s] 
+    Downloading teff=3000:   1%|          | 250k/33.8M [00:00<01:07, 500kB/s] 
+    Downloading teff=3000:   2%|▏         | 561k/33.8M [00:00<00:30, 1.10MB/s]
+    Downloading teff=3000:   6%|▋         | 2.16M/33.8M [00:00<00:07, 4.07MB/s]
+    Downloading teff=3000:  14%|█▍        | 4.68M/33.8M [00:01<00:03, 8.89MB/s]
+    Downloading teff=3000:  27%|██▋       | 9.20M/33.8M [00:01<00:01, 17.9MB/s]
+    Downloading teff=3000:  37%|███▋      | 12.5M/33.8M [00:01<00:01, 18.5MB/s]
+    Downloading teff=3000:  48%|████▊     | 16.2M/33.8M [00:01<00:00, 23.0MB/s]
+    Downloading teff=3000:  60%|██████    | 20.3M/33.8M [00:01<00:00, 27.4MB/s]
+    Downloading teff=3000:  71%|███████   | 23.8M/33.8M [00:01<00:00, 25.0MB/s]
+    Downloading teff=3000:  83%|████████▎ | 28.1M/33.8M [00:01<00:00, 29.3MB/s]
+    Downloading teff=3000:  94%|█████████▍| 31.8M/33.8M [00:01<00:00, 31.4MB/s]    Downloading teff=3000: 100%|██████████| 33.8M/33.8M [00:01<00:00, 16.9MB/s]
+    Loading Spectra:  33%|███▎      | 1/3 [00:02<00:05,  2.93s/it]PHOENIX grid for 3100 not found. Downloading...
 
     Downloading teff=3100:   0%|          | 0.00/33.7M [00:00<?, ?B/s]
-    Downloading teff=3100:   0%|          | 4.10k/33.7M [00:00<50:17, 11.2kB/s]
-    Downloading teff=3100:   0%|          | 45.1k/33.7M [00:00<05:21, 105kB/s] 
-    Downloading teff=3100:   0%|          | 123k/33.7M [00:00<02:09, 260kB/s] 
-    Downloading teff=3100:   2%|▏         | 528k/33.7M [00:00<00:31, 1.06MB/s]
-    Downloading teff=3100:   3%|▎         | 1.15M/33.7M [00:00<00:15, 2.16MB/s]
-    Downloading teff=3100:   9%|▊         | 2.88M/33.7M [00:01<00:05, 5.86MB/s]
-    Downloading teff=3100:  18%|█▊        | 6.05M/33.7M [00:01<00:02, 12.5MB/s]
-    Downloading teff=3100:  28%|██▊       | 9.42M/33.7M [00:01<00:01, 15.8MB/s]
-    Downloading teff=3100:  38%|███▊      | 12.8M/33.7M [00:01<00:01, 20.2MB/s]
-    Downloading teff=3100:  47%|████▋     | 15.8M/33.7M [00:01<00:00, 21.7MB/s]
-    Downloading teff=3100:  57%|█████▋    | 19.3M/33.7M [00:01<00:00, 25.2MB/s]
-    Downloading teff=3100:  68%|██████▊   | 22.9M/33.7M [00:01<00:00, 28.2MB/s]
-    Downloading teff=3100:  78%|███████▊  | 26.3M/33.7M [00:01<00:00, 25.7MB/s]
-    Downloading teff=3100:  88%|████████▊ | 29.8M/33.7M [00:01<00:00, 28.1MB/s]
-    Downloading teff=3100:  97%|█████████▋| 32.8M/33.7M [00:02<00:00, 27.2MB/s]    Downloading teff=3100: 100%|██████████| 33.7M/33.7M [00:02<00:00, 16.1MB/s]
-    Loading Spectra:  67%|██████▋   | 2/3 [00:05<00:02,  2.84s/it]PHOENIX grid for 3200 not found. Downloading...
+    Downloading teff=3100:   0%|          | 4.10k/33.7M [00:00<49:20, 11.4kB/s]
+    Downloading teff=3100:   0%|          | 45.1k/33.7M [00:00<05:09, 109kB/s] 
+    Downloading teff=3100:   0%|          | 119k/33.7M [00:00<02:04, 269kB/s] 
+    Downloading teff=3100:   1%|          | 287k/33.7M [00:00<00:53, 627kB/s]
+    Downloading teff=3100:   3%|▎         | 1.08M/33.7M [00:00<00:14, 2.29MB/s]
+    Downloading teff=3100:   7%|▋         | 2.33M/33.7M [00:00<00:06, 4.82MB/s]
+    Downloading teff=3100:  15%|█▍        | 5.05M/33.7M [00:01<00:02, 10.3MB/s]
+    Downloading teff=3100:  26%|██▋       | 8.90M/33.7M [00:01<00:01, 17.9MB/s]
+    Downloading teff=3100:  36%|███▌      | 12.2M/33.7M [00:01<00:01, 19.7MB/s]
+    Downloading teff=3100:  47%|████▋     | 15.9M/33.7M [00:01<00:00, 23.7MB/s]
+    Downloading teff=3100:  58%|█████▊    | 19.7M/33.7M [00:01<00:00, 26.5MB/s]
+    Downloading teff=3100:  70%|██████▉   | 23.6M/33.7M [00:01<00:00, 29.9MB/s]
+    Downloading teff=3100:  80%|████████  | 27.0M/33.7M [00:01<00:00, 27.7MB/s]
+    Downloading teff=3100:  90%|█████████ | 30.4M/33.7M [00:01<00:00, 29.0MB/s]    Downloading teff=3100: 100%|██████████| 33.7M/33.7M [00:02<00:00, 16.8MB/s]
+    Loading Spectra:  67%|██████▋   | 2/3 [00:05<00:02,  2.78s/it]PHOENIX grid for 3200 not found. Downloading...
 
     Downloading teff=3200:   0%|          | 0.00/33.6M [00:00<?, ?B/s]
-    Downloading teff=3200:   0%|          | 4.10k/33.6M [00:00<50:05, 11.2kB/s]
-    Downloading teff=3200:   0%|          | 45.1k/33.6M [00:00<04:50, 116kB/s] 
-    Downloading teff=3200:   0%|          | 135k/33.6M [00:00<01:59, 279kB/s] 
-    Downloading teff=3200:   2%|▏         | 512k/33.6M [00:00<00:30, 1.08MB/s]
-    Downloading teff=3200:   4%|▎         | 1.25M/33.6M [00:00<00:14, 2.27MB/s]
-    Downloading teff=3200:   9%|▉         | 3.18M/33.6M [00:01<00:04, 6.25MB/s]
-    Downloading teff=3200:  19%|█▉        | 6.41M/33.6M [00:01<00:02, 12.8MB/s]
-    Downloading teff=3200:  29%|██▊       | 9.66M/33.6M [00:01<00:01, 17.4MB/s]
-    Downloading teff=3200:  39%|███▉      | 13.1M/33.6M [00:01<00:00, 21.9MB/s]
-    Downloading teff=3200:  48%|████▊     | 16.2M/33.6M [00:01<00:00, 24.3MB/s]
-    Downloading teff=3200:  56%|█████▌    | 18.8M/33.6M [00:01<00:00, 19.8MB/s]
-    Downloading teff=3200:  66%|██████▌   | 22.3M/33.6M [00:01<00:00, 23.5MB/s]
-    Downloading teff=3200:  74%|███████▍  | 24.9M/33.6M [00:01<00:00, 24.0MB/s]
-    Downloading teff=3200:  84%|████████▍ | 28.2M/33.6M [00:01<00:00, 26.0MB/s]
-    Downloading teff=3200:  94%|█████████▍| 31.7M/33.6M [00:02<00:00, 28.4MB/s]    Downloading teff=3200: 100%|██████████| 33.6M/33.6M [00:02<00:00, 15.6MB/s]
-    Loading Spectra: 100%|██████████| 3/3 [00:08<00:00,  2.84s/it]    Loading Spectra: 100%|██████████| 3/3 [00:08<00:00,  2.85s/it]
+    Downloading teff=3200:   0%|          | 4.10k/33.6M [00:00<51:18, 10.9kB/s]
+    Downloading teff=3200:   0%|          | 57.3k/33.6M [00:00<04:28, 125kB/s] 
+    Downloading teff=3200:   1%|          | 287k/33.6M [00:00<01:02, 538kB/s] 
+    Downloading teff=3200:   4%|▎         | 1.26M/33.6M [00:00<00:14, 2.16MB/s]
+    Downloading teff=3200:  10%|█         | 3.47M/33.6M [00:01<00:04, 6.36MB/s]
+    Downloading teff=3200:  22%|██▏       | 7.47M/33.6M [00:01<00:01, 14.1MB/s]
+    Downloading teff=3200:  31%|███       | 10.3M/33.6M [00:01<00:01, 15.0MB/s]
+    Downloading teff=3200:  41%|████▏     | 13.9M/33.6M [00:01<00:00, 19.9MB/s]
+    Downloading teff=3200:  52%|█████▏    | 17.6M/33.6M [00:01<00:00, 24.1MB/s]
+    Downloading teff=3200:  64%|██████▎   | 21.4M/33.6M [00:01<00:00, 23.2MB/s]
+    Downloading teff=3200:  75%|███████▌  | 25.3M/33.6M [00:01<00:00, 27.2MB/s]
+    Downloading teff=3200:  87%|████████▋ | 29.1M/33.6M [00:01<00:00, 29.6MB/s]
+    Downloading teff=3200:  98%|█████████▊| 32.8M/33.6M [00:02<00:00, 26.7MB/s]    Downloading teff=3200: 100%|██████████| 33.6M/33.6M [00:02<00:00, 16.4MB/s]
+    Loading Spectra: 100%|██████████| 3/3 [00:08<00:00,  2.74s/it]    Loading Spectra: 100%|██████████| 3/3 [00:08<00:00,  2.77s/it]
 
 
 
@@ -170,7 +165,7 @@ wavelength array as well as interpolate between :math:`T_{eff}` values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.806 seconds)
+   **Total running time of the script:** (0 minutes 8.550 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_use_vspec_grid.py:
@@ -186,6 +181,10 @@ wavelength array as well as interpolate between :math:`T_{eff}` values.
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_use_vspec_grid.py <plot_use_vspec_grid.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: plot_use_vspec_grid.zip <plot_use_vspec_grid.zip>`
 
 
 .. only:: html
