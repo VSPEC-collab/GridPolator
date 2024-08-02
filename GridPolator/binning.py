@@ -83,8 +83,10 @@ def bin_spectra_python(wl_old: np.ndarray, fl_old: np.ndarray, wl_new: np.ndarra
         lam_cen = wl_new[i]
         upper = 0.5*(lam_cen + wl_new[i+1])
         if i == 0:
-            # dl = upper - lam_cen # uncomment to sample blue of first pixel
-            lower = lam_cen  # - dl
+            dl = upper - lam_cen # uncomment to sample blue of first pixel
+            next_wl = wl_new[i+1]
+            resolving_power = lam_cen/(next_wl - lam_cen)
+            lower = lam_cen - dl*(resolving_power/(1+resolving_power))
         else:
             lower = 0.5*(lam_cen + wl_new[i-1])
         if lower >= upper:
