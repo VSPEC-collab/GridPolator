@@ -5,7 +5,7 @@ This module contains global configurations used in the GridPolator and VSPEC cod
 """
 from astropy import units as u
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 user_agent = f'GridPolator/{__version__}'
 
